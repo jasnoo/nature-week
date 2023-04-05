@@ -36,9 +36,6 @@ class FinderContainer extends Component {
     }
 
 
-    /// THIS IS A TEST TO SEE IF THIS EXISTS IN MAIN
-
-
     // set up to handle when 
     handleClick(e) {
         console.log('this is happening')
