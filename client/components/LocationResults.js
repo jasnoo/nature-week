@@ -9,7 +9,7 @@ class LocationResults extends Component {
         let locations = this.props.results
         let resultArr = []
         for (let i = 0; i < locations.length; i++) {
-            resultArr.push(<li locID={locations[i]['location_id']}>{locations[i]['display_name']}</li>)
+            resultArr.push(<li className='locItem' id={locations[i]['location_id']} onClick={this.props.handleClick} >{locations[i]['display_name']}</li>)
         }
 
         return (

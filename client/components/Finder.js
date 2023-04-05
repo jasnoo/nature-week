@@ -34,7 +34,7 @@ class Finder extends Component {
                 </form> */}
 
                 <div className='locationResults'>
-                    <LocationResults results={this.props.locationResults} />
+                    <LocationResults results={this.props.locationResults} handleClick={this.props.handleClick} />
                     {/* <ul>{locationResultArr}</ul> */}
                 </div>
 

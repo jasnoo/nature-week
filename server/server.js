@@ -20,12 +20,10 @@ app.get('/api', (req, res) => {
 // });
 
 // app.use('/find', (req, res) => {
-app.use('/find', finderController.getNatureData, (req, res) => {
-    // res.status(200).send(res.locals.results);
-    res.status(200).send('wow this worked')
+app.use('/find/:id', finderController.getNatureData, (req, res) => {
+    res.status(200).send(res.locals.results);
+    // res.status(200).send('wow this worked')
 });
-
-
 
 
 // statically serve everything in the build folder on the route '/build'
