@@ -36,7 +36,7 @@ class FinderContainer extends Component {
     }
 
 
-
+    /// THIS IS A TEST TO SEE IF THIS EXISTS IN MAIN
 
 
     // set up to handle when 
@@ -113,7 +113,7 @@ class FinderContainer extends Component {
             <div className='finderContainer'>
                 {/* <h1>THIS IS MY FINDER CONTAINER</h1> */}
                 <Finder nature_option={this.state.nature_option} location_input={this.state.location_input} handleClick={this.handleClick} handleChange={this.handleChange} locationResults={this.state.location_results} />
-                <ResultsContainer nature_option={this.state.nature_option} date={this.state.sinceDate} speciesList={this.state.species_list} />
+                <ResultsContainer nature_type={this.state.nature_option} date={this.state.sinceDate} speciesList={this.state.species_list} />
             </div>
         )
     }
