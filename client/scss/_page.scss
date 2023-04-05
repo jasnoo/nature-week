@@ -9,6 +9,24 @@ body {
 .finderContainer {
     background-color: aquamarine;
 }
+
+
+.resultsContainer { 
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width:1000px;
+    margin:auto;
+}
 .result {
     background:orange;
+
+    width:300px;
+
+    img {
+        height:200px;
+        max-width:300px;
+    }
+ 
+
 }

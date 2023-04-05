@@ -10,7 +10,8 @@ class FinderContainer extends Component {
             location_input: '',
             location_id: '',
             location_results: [],
-            species_list: []
+            species_list: [],
+            sinceDate: ''
 
         }
         this.handleClick = this.handleClick.bind(this)
@@ -47,7 +48,9 @@ class FinderContainer extends Component {
                 .then(response => response.json())
                 .then((data) => {
                     console.log('data coming through everything', data)
-                    this.setState({ species_list: data })
+                    this.setState({ species_list: data.results })
+                    this.setState({ sinceDate: data.date })
+
                 })
                 .catch(e => console.log(e))
 
@@ -71,9 +74,9 @@ class FinderContainer extends Component {
     render() {
         return (
             <div className='finderContainer'>
-                <h1>THIS IS MY FINDER CONTAINER</h1>
+                {/* <h1>THIS IS MY FINDER CONTAINER</h1> */}
                 <Finder location_input={this.state.location_input} handleClick={this.handleClick} handleChange={this.handleChange} locationResults={this.state.location_results} />
-                <ResultsContainer speciesList={this.state.species_list} />
+                <ResultsContainer date={this.state.sinceDate} speciesList={this.state.species_list} />
             </div>
         )
     }

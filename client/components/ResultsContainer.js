@@ -8,20 +8,23 @@ class ResultsContainer extends Component {
 
 
         let resultArr = this.props.speciesList.map((x, i) => {
-            return <Result key={`result-${i}`} name={x['name']} url={x['medium_url']} />
+            return <Result key={`result-${i}`} count={x.count} name={x.name} url={x.medium_url} common={x.preferred_common_name} />
 
 
         })
 
 
         return (
-            <div className='resultsContainer' >
-                <h1>THIS IS MY RESULTS CONTAINER</h1>
-                {resultArr}
-                {/* <Result />
+            <div>
+                <h1>From {this.props.date}</h1>
+
+                <div className='resultsContainer' >
+                    {resultArr}
+                    {/* <Result />
                 <Result /><Result /><Result /><Result />
                 <Result /> */}
-                <p></p>
+                    <p></p>
+                </div>
             </div>
         )
     }
