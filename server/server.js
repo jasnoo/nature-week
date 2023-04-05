@@ -21,7 +21,9 @@ app.get('/api', (req, res) => {
 
 // app.use('/find', (req, res) => {
 app.use('/find/:id', finderController.getNatureData, (req, res) => {
-    res.status(200).send(res.locals.results);
+    // res.status(200).json(res.locals.results);
+    // console.log('res.locals.results in server.js', res.locals.results)
+    res.json(res.locals.results)
     // res.status(200).send('wow this worked')
 });
 
