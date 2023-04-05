@@ -8,7 +8,8 @@ class Result extends Component {
                 <h1>{this.props.name}</h1>
                 <h2>{this.props.common}</h2>
                 <img src={this.props.url}></img>
-                {/* <p className='resultName'>BUFFALO</p> */}
+                <div className='favoriteResult'>Favorite</div>
+
             </div>
         )
     }

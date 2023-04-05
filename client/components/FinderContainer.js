@@ -106,19 +106,6 @@ class FinderContainer extends Component {
         let location = document.getElementById('location').value
         this.setState({ location_input: location })
         this.getINaturalist(location)
-
-
-        // fetch('https://api.inaturalist.org/v1/places/autocomplete?' + new URLSearchParams({ q: location }))
-        //     .then(response => response.json())
-        //     .then((data) => {
-        //         // console.log(data)
-        //         let locationArr = data.results.map(x => {
-        //             return { display_name: x.display_name, location_id: x.id }
-        //         })
-        //         console.log(locationArr)
-        //         this.setState({ location_results: locationArr })
-        //     })
-        //     .catch(error => console.error(error));
     }
 
     render() {
@@ -126,7 +113,7 @@ class FinderContainer extends Component {
             <div className='finderContainer'>
                 {/* <h1>THIS IS MY FINDER CONTAINER</h1> */}
                 <Finder nature_option={this.state.nature_option} location_input={this.state.location_input} handleClick={this.handleClick} handleChange={this.handleChange} locationResults={this.state.location_results} />
-                <ResultsContainer date={this.state.sinceDate} speciesList={this.state.species_list} />
+                <ResultsContainer nature_option={this.state.nature_option} date={this.state.sinceDate} speciesList={this.state.species_list} />
             </div>
         )
     }
