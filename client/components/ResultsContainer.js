@@ -20,10 +20,6 @@ class ResultsContainer extends Component {
 
                 <div className='resultsContainer' >
                     {resultArr}
-                    {/* <Result />
-                <Result /><Result /><Result /><Result />
-                <Result /> */}
-                    <p></p>
                 </div>
             </div>
         )

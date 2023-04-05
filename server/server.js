@@ -20,7 +20,7 @@ app.get('/api', (req, res) => {
 // });
 
 // app.use('/find', (req, res) => {
-app.use('/find/:id', finderController.getNatureData, (req, res) => {
+app.use('/find/:location_id/:nature_option', finderController.getNatureData, (req, res) => {
     // res.status(200).json(res.locals.results);
     // console.log('res.locals.results in server.js', res.locals.results)
     res.json({ results: res.locals.results, date: res.locals.date })
