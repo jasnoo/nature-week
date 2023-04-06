@@ -44,11 +44,16 @@ class FinderContainer extends Component {
         console.log('this is happening')
         console.log(e)
 
+
         // when a location list item is clicked 
         if (e.target.classList.contains('locItem')) {
             // console.log(e.target.getAttribute('id'))
             let location_id = e.target.getAttribute('id')
+            console.log('e.target.innerText', e.target.innerText)
             this.setState({ location_id: location_id })
+            this.setState({ location_input: e.target.innerText })
+            // document.getElementById('location').setAttribute('value', 'test')
+            document.getElementById('location').value = e.target.innerText//this.setState.location_input
 
             fetch(`/find/${location_id}/${this.state.nature_option}`)
                 .then(response => response.json())
