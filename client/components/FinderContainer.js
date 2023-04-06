@@ -13,6 +13,7 @@ class FinderContainer extends Component {
             species_list: [],
             sinceDate: '',
             nature_option: '',
+            headerText: 'Nature'
 
             // has_rendered: false,
 
@@ -52,6 +53,8 @@ class FinderContainer extends Component {
             console.log('e.target.innerText', e.target.innerText)
             this.setState({ location_id: location_id })
             this.setState({ location_input: e.target.innerText })
+
+
             // document.getElementById('location').setAttribute('value', 'test')
             document.getElementById('location').value = e.target.innerText//this.setState.location_input
 
@@ -73,8 +76,18 @@ class FinderContainer extends Component {
         if (e.target.classList.contains('natureOption')) {
             let natureOption = e.target.id
             this.setState({ nature_option: natureOption })
-            document.querySelector('.natureOption').style.backgroundColor = 'darkOrange';
-            document.getElementById(`${natureOption}`).style.backgroundColor = '#ff5500';
+            // document.querySelector('.natureOption').style.backgroundColor = '%FF8C00';
+            // document.getElementById(`${natureOption}`).style.backgroundColor = '#ff5500';
+            if (natureOption === 'Plantae') {
+                this.setState({ headerText: 'Plants' })
+            } else if (natureOption === 'Fungi') {
+                this.setState({ headerText: 'Mushrooms' })
+            }
+            else if (natureOption === 'Aves') {
+                this.setState({ headerText: 'Birds' })
+            }
+
+
             // document.getElementById('natureOption').style = 'background-color: red;';
 
 
@@ -146,8 +159,9 @@ class FinderContainer extends Component {
 
     render() {
         return (
+
             <div className='finderContainer'>
-                {/* <h1>THIS IS MY FINDER CONTAINER</h1> */}
+                <h1 className='newHeader'>One Week Of <span className='titleOption'>{this.state.headerText}</span></h1>
                 <Finder nature_option={this.state.nature_option} location_input={this.state.location_input} handleClick={this.handleClick} handleChange={this.handleChange} locationResults={this.state.location_results} />
                 <ResultsContainer nature_option={this.state.nature_option} date={this.state.sinceDate} speciesList={this.state.species_list} handleClick={this.handleClick} />
             </div>

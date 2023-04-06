@@ -4,7 +4,7 @@ import Result from './Result.js'
 class ResultsContainer extends Component {
 
     render() {
-        console.log(this.props.speciesList)
+        // console.log(this.props.speciesList)
 
 
         let resultArr = this.props.speciesList.map((x, i) => {

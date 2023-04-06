@@ -10,7 +10,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                <Header />
+                {/* <Header /> */}
                 <FinderContainer />
                 {/* <h1>Hello world! WOW</h1> */}
             </div>
