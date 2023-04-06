@@ -25,6 +25,7 @@
         margin:auto;
         max-height:260px;
         max-width:300px;
+        padding:10px 0
     }
  
     h2{
@@ -34,6 +35,8 @@
     h3{
         color:bisque;
     }
+
+    h4 {color:bisque;}
 }
 
 .seenSince { 
@@ -42,4 +45,10 @@
     font-size: 25px;
     margin:40px auto 10px;
     
+}
+
+
+.resultFavorite {
+    color: green; 
+    margin-top:10px;
 }

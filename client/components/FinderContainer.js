@@ -14,7 +14,8 @@ class FinderContainer extends Component {
             sinceDate: '',
             nature_option: '',
             headerText: 'Nature',
-            isFavorite: []
+            headerLocation: ''
+
 
             // has_rendered: false,
 
@@ -65,8 +66,9 @@ class FinderContainer extends Component {
 
                     // console.log('data coming through everything', data)
                     this.setState({ species_list: data.results })
-                    this.setState({ sinceDate: `Seen between ${data.date} - today` })
+                    this.setState({ sinceDate: ` between ${data.date} - today` })
                     this.setState({ location_results: [] })
+                    this.setState({ headerLocation: `Seen in ${e.target.innerText}` })
 
 
                 })
@@ -98,8 +100,12 @@ class FinderContainer extends Component {
                     .then((data) => {
                         // console.log('data coming through everything', data)
                         this.setState({ species_list: data.results })
+
                         this.setState({ sinceDate: `Seen between ${data.date} - today` })
                         this.setState({ location_results: [] })
+                        this.setState({ headerLocation: `in ${this.state.location_input}` })
+
+
 
                     })
                     .catch(e => console.log(e))
@@ -160,6 +166,7 @@ class FinderContainer extends Component {
     handleChange(e) {
         let location = document.getElementById('location').value
         this.setState({ location_input: location })
+
         this.getINaturalist(location)
     }
 
@@ -168,8 +175,9 @@ class FinderContainer extends Component {
 
             <div className='finderContainer'>
                 <h1 className='newHeader'>One Week Of <span className='titleOption'>{this.state.headerText}</span></h1>
+                {/* <h2 className='newHeader2'>{this.state.headerLocation}</h2> */}
                 <Finder nature_option={this.state.nature_option} location_input={this.state.location_input} handleClick={this.handleClick} handleChange={this.handleChange} locationResults={this.state.location_results} />
-                <ResultsContainer nature_option={this.state.nature_option} date={this.state.sinceDate} speciesList={this.state.species_list} handleClick={this.handleClick} />
+                <ResultsContainer headerLocation={this.state.headerLocation} nature_option={this.state.nature_option} date={this.state.sinceDate} speciesList={this.state.species_list} handleClick={this.handleClick} />
             </div>
         )
     }

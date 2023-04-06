@@ -16,7 +16,7 @@ class ResultsContainer extends Component {
 
         return (
             <div>
-                <h1 className='seenSince'>{this.props.date}</h1>
+                <h1 className='seenSince'>{`${this.props.headerLocation}  ${this.props.date}`}</h1>
 
                 <div className='resultsContainer' >
                     {resultArr}

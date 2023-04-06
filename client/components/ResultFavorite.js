@@ -10,7 +10,7 @@ class ResultFavorite extends Component {
         let fav = ''
         if (this.props.isFavorite) {
             fav = 'regStar'
-            text = `Favorited`
+            text = `★ In Your Favorites `
         } else {
             fav = 'favStar'
 
@@ -23,7 +23,7 @@ class ResultFavorite extends Component {
 
 
             // <div key={`fav-${this.props.speciesID}`} className='resultFavorite ' >Favorite <span>⭐</span></div >
-            <div url={this.props.url}
+            <div className='resultFavText' url={this.props.url}
                 isFavorite={this.props.isFavorite}
 
                 nature_option={this.props.nature_option}
@@ -34,7 +34,7 @@ class ResultFavorite extends Component {
                 key={`fav-${this.props.speciesID}`} speciesID={this.props.speciesID} id={`fav-${this.props.speciesID}`} className={`resultFavorite`
                 } >
                 {/* <span className={fav}>☆★</span> */}
-                ★
+
                 {text}
             </div >
 

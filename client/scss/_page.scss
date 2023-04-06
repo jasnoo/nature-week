@@ -14,7 +14,7 @@ body {
   background-color: darkGreen;
 }
 
-.header,  {
+.header  {
 
     font-family: 'Suez One', serif;
   
@@ -28,13 +28,23 @@ body {
         margin:auto;
         text-align: center;
     }
+
+    
 }
 
+
+.newHeader2 {
+        font-size: 30px;
+          color:$cream;
+       
+        margin:auto;
+        text-align: center;
+    }
 
 
 
 .newHeader {
-  padding: 20px;
+  padding: 20px 0 0 ;
    font-family: 'Suez One', serif;
    color:$cream;
    text-align: center;
