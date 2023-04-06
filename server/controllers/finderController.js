@@ -16,7 +16,7 @@ finderController.getNatureData = (req, res, next) => {
 
             // console.log('data:', data)
             data.results.forEach(x => {
-                speciesArr.push({ count: x.count, name: x.taxon.name, medium_url: x.taxon.default_photo.medium_url, preferred_common_name: x.taxon.preferred_common_name })
+                speciesArr.push({ count: x.count, name: x.taxon.name, id: x.taxon.id, medium_url: x.taxon.default_photo.medium_url, preferred_common_name: x.taxon.preferred_common_name })
             })
             // console.log('speciesArr', speciesArr)
             res.locals.date = weekAgoStr

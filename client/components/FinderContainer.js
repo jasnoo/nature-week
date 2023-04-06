@@ -13,13 +13,16 @@ class FinderContainer extends Component {
             species_list: [],
             sinceDate: '',
             nature_option: '',
-            has_rendered: false,
+
+            // has_rendered: false,
 
         }
         this.handleClick = this.handleClick.bind(this)
         this.handleChange = this.handleChange.bind(this)
 
     }
+
+
 
     getINaturalist(id) {
         fetch('https://api.inaturalist.org/v1/places/autocomplete?' + new URLSearchParams({ q: id }))
@@ -40,13 +43,6 @@ class FinderContainer extends Component {
     handleClick(e) {
         console.log('this is happening')
         console.log(e)
-        // if the click was from the find button
-
-        // if (e.target === document.getElementById('findButton')) {
-        //     let location = document.getElementById('location').value
-        //     this.setState({ location_input: location })
-        //     getINaturalist(location)
-        // }
 
         // when a location list item is clicked 
         if (e.target.classList.contains('locItem')) {
@@ -61,7 +57,8 @@ class FinderContainer extends Component {
                     // console.log('data coming through everything', data)
                     this.setState({ species_list: data.results })
                     this.setState({ sinceDate: data.date })
-                    this.setState({ has_rendered: true })
+                    this.setState({ location_results: [] })
+
 
                 })
                 .catch(e => console.log(e))
@@ -71,13 +68,14 @@ class FinderContainer extends Component {
         if (e.target.classList.contains('natureOption')) {
             let natureOption = e.target.id
             this.setState({ nature_option: natureOption })
-            if (this.state.has_rendered === true) {
+            if (this.state.location_id !== '') {
                 fetch(`/find/${this.state.location_id}/${natureOption}`)
                     .then(response => response.json())
                     .then((data) => {
                         // console.log('data coming through everything', data)
                         this.setState({ species_list: data.results })
                         this.setState({ sinceDate: data.date })
+                        this.setState({ location_results: [] })
 
                     })
                     .catch(e => console.log(e))
@@ -87,13 +85,44 @@ class FinderContainer extends Component {
 
 
 
-
             // let natureOption = document.getElementById('location').value
             // this.setState({ location_input: location })
             // getINaturalist(location)
 
         }
+        // if a result favorite is clicked
+        if (e.target.classList.contains('favoriteResult')) {
+            // console.log('a fav item was clicked')
+            // console.log(e.target.getAttribute('common'))
 
+            // console.log(e.target.getAttribute('name'),
+            //     e.target.getAttribute('common'),
+            //     e.target.getAttribute('speciesId'),
+            //     e.target.getAttribute('nature_option'),
+            //     e.target.getAttribute('url'))
+
+            let favObj = {
+                _id: e.target.getAttribute('speciesId'),
+                name: e.target.getAttribute('name'),
+                common_name: e.target.getAttribute('common'),
+                type: e.target.getAttribute('nature_option'),
+                photo_url: e.target.getAttribute('url')
+            }
+            fetch('/favorites', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(favObj)
+            })
+                .then(response => response.json())
+                .then((data) => {
+                    console.log('what came back from db stuff')
+                })
+
+
+
+        }
 
 
         // next click event behavior can go here
@@ -110,7 +139,7 @@ class FinderContainer extends Component {
             <div className='finderContainer'>
                 {/* <h1>THIS IS MY FINDER CONTAINER</h1> */}
                 <Finder nature_option={this.state.nature_option} location_input={this.state.location_input} handleClick={this.handleClick} handleChange={this.handleChange} locationResults={this.state.location_results} />
-                <ResultsContainer nature_type={this.state.nature_option} date={this.state.sinceDate} speciesList={this.state.species_list} />
+                <ResultsContainer nature_option={this.state.nature_option} date={this.state.sinceDate} speciesList={this.state.species_list} handleClick={this.handleClick} />
             </div>
         )
     }

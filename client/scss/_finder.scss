@@ -1,0 +1,97 @@
+.finderContainer {
+font-family: 'Suez One', serif;
+font-size: 20px;
+margin:auto;
+
+
+
+
+
+
+
+.finder {
+    color:$cream;
+
+    min-width:800px;
+    width:80%;
+    margin:auto;
+    label {
+    margin-right:10px
+}
+ 
+}
+
+}
+
+
+.finderContainer {
+    background-color: darkGreen;
+}
+
+.natureOptions {
+    
+    margin:auto;
+    width:800px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align:center;
+    li {
+        margin:20px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        border: 2px solid $darkOrange;
+        list-style-type: none;
+        background-color: darkOrange;
+
+        
+    }
+
+    li:hover{
+
+            background-color:  $red;
+        }
+   
+}
+
+#locationBox {
+    width:800px;
+    margin:auto;
+            text-align: center;
+
+    input { 
+        margin:auto;
+        font-size:20px;
+        height:40px;
+        // width: 600px;
+        // maximum-width: 600px;
+        min-width:500px;
+
+    }
+}
+
+
+
+
+.LocationResults {
+    margin:5px auto;
+    font-size: 16px;
+    text-align: left;
+    width: 500px;
+    
+    li {
+        margin-left:20px;
+        padding: 4px;
+        border-radius: 10px;
+        // border: 2px solid $darkOrange;
+        list-style-type: none;
+        // background-color: darkOrange;
+    }
+
+    li:hover {
+        color:bisque
+    }
+
+
+
+}

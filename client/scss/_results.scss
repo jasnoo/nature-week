@@ -1,0 +1,36 @@
+
+
+.resultsContainer { 
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width:1400px;
+    margin:auto;
+
+}
+.result {
+    background: $orange;
+    margin:10px;
+    padding:20px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    width:400px;
+
+    img {
+        margin:auto;
+        max-height:260px;
+        max-width:300px;
+    }
+ 
+    h2{
+        color:green;
+    }
+ 
+    h3{
+        color:bisque;
+    }
+}

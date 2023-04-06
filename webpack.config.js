@@ -47,6 +47,10 @@ module.exports = {
         port: 8080,
         proxy: {
             '/find': 'http://localhost:3000',
+            '/signup': 'http://localhost:3000',
+            '/login': 'http://localhost:3000',
+            '/favorites': 'http://localhost:3000',
+
         }
     }
 

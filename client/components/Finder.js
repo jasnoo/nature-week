@@ -22,34 +22,30 @@ class Finder extends Component {
 
         return (
             <div className='finder' location_input={this.props.location_input} >
-                <h1>THIS IS MY FINDER</h1>
-
+                {/* <h1>THIS IS MY FINDER</h1> */}
 
                 <ul className='natureOptions'>
-                    <li className='natureOption' onClick={this.props.handleClick} id='Aves' >Birds</li>
-                    <li className='natureOption' onClick={this.props.handleClick} id='Plantae'>Plants</li>
-                    <li className='natureOption' onClick={this.props.handleClick} id='Fungi'>Mushrooms</li>
+                    <li className='natureOption' onClick={this.props.handleClick} id='Aves' >🐦 Birds</li>
+                    <li className='natureOption' onClick={this.props.handleClick} id='Plantae'>🌱 Plants</li>
+                    <li className='natureOption' onClick={this.props.handleClick} id='Fungi'>🍄 Mushrooms</li>
                 </ul>
+                <div id='locationBox'>
+
+                    <label htmlFor="location" > Location:</label>
 
 
-
-                <label for="location" > Location:</label>
-
-
-                <input type="text" id="location" name="loc" onChange={this.props.handleChange} defaultValue='' />
-                {/* <button onClick={this.props.handleClick} id='findButton'>Find</button> */}
-                {/* <input type="submit" value="Submit" />
+                    <input type="text" id="location" name="loc" onChange={this.props.handleChange} defaultValue='' />
+                    {/* <button onClick={this.props.handleClick} id='findButton'>Find</button> */}
+                    {/* <input type="submit" value="Submit" />
                 </form> */}
 
-                <div className='locationResults'>
                     <LocationResults results={this.props.locationResults} handleClick={this.props.handleClick} />
                     {/* <ul>{locationResultArr}</ul> */}
                 </div>
-
 
             </div >
         )
     }
 }
 
-export default Finder;
+export default Finder
