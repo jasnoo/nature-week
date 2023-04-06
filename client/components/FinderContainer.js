@@ -56,7 +56,7 @@ class FinderContainer extends Component {
 
                     // console.log('data coming through everything', data)
                     this.setState({ species_list: data.results })
-                    this.setState({ sinceDate: data.date })
+                    this.setState({ sinceDate: `Seen between ${data.date} - today` })
                     this.setState({ location_results: [] })
 
 
@@ -68,13 +68,18 @@ class FinderContainer extends Component {
         if (e.target.classList.contains('natureOption')) {
             let natureOption = e.target.id
             this.setState({ nature_option: natureOption })
+            document.querySelector('.natureOption').style.backgroundColor = 'darkOrange';
+            document.getElementById(`${natureOption}`).style.backgroundColor = '#ff5500';
+            // document.getElementById('natureOption').style = 'background-color: red;';
+
+
             if (this.state.location_id !== '') {
                 fetch(`/find/${this.state.location_id}/${natureOption}`)
                     .then(response => response.json())
                     .then((data) => {
                         // console.log('data coming through everything', data)
                         this.setState({ species_list: data.results })
-                        this.setState({ sinceDate: data.date })
+                        this.setState({ sinceDate: `Seen between ${data.date} - today` })
                         this.setState({ location_results: [] })
 
                     })

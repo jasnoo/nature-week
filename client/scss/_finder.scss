@@ -56,8 +56,12 @@ margin:auto;
 
 #locationBox {
     width:800px;
-    margin:auto;
+    margin:10px auto;
             text-align: center;
+
+    label {
+        font-size:25px;
+    }
 
     input { 
         margin:auto;
