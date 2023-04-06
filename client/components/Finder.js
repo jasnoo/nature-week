@@ -28,6 +28,7 @@ class Finder extends Component {
                     <li className='natureOption' onClick={this.props.handleClick} id='Aves' >🐦 Birds</li>
                     <li className='natureOption' onClick={this.props.handleClick} id='Plantae'>🌱 Plants</li>
                     <li className='natureOption' onClick={this.props.handleClick} id='Fungi'>🍄 Mushrooms</li>
+                    <li className='natureOption' onClick={this.props.handleClick} id='Favorites'>Favorites</li>
                 </ul>
                 <div id='locationBox'>
 

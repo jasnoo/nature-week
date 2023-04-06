@@ -51,17 +51,19 @@ app.use('/find/:location_id/:nature_option', finderController.getNatureData, (re
 //     res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
 // });
 
-app.post('/favorites', favoriteController.addFavorite, (req, res) => {
-    // console.log('req:', req.body)
-    // req: {
-    //     _id: '54573',
-    //         name: 'Schizophyllum commune',
-    //             common_name: 'splitgill mushroom',
-    //                 type: 'Fungi'
-    // }
-    // console.log('res:', res)
+app.post('/favorites', favoriteController.checkFav, (req, res) => {
+    // console.log(res.locals.inFavorites)
     res.status(200)
 })
+
+app.get('/favorites/:id', favoriteController.checkIfFavorite, (req, res,) => {
+    // console.log('req:', req.body)
+    // console.log(res.locals.isFavorite)
+    res.send(res.locals.isFavorite)
+
+    // res.status(200).send(res.locals.isFavorite)
+})
+
 
 
 // statically serve everything in the build folder on the route '/build'

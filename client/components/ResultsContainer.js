@@ -8,7 +8,7 @@ class ResultsContainer extends Component {
 
 
         let resultArr = this.props.speciesList.map((x, i) => {
-            return <Result key={`result-${i}`} count={x.count} name={x.name} url={x.medium_url} speciesID={x.id} common={x.preferred_common_name} nature_option={this.props.nature_option} handleClick={this.props.handleClick} />
+            return <Result handleClick={this.props.handleClick} key={`result-${i}`} count={x.count} name={x.name} url={x.medium_url} speciesID={x.id} common={x.preferred_common_name} nature_option={this.props.nature_option} handleClick={this.props.handleClick} />
 
 
         })

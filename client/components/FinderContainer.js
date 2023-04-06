@@ -13,7 +13,8 @@ class FinderContainer extends Component {
             species_list: [],
             sinceDate: '',
             nature_option: '',
-            headerText: 'Nature'
+            headerText: 'Nature',
+            isFavorite: []
 
             // has_rendered: false,
 
@@ -43,7 +44,7 @@ class FinderContainer extends Component {
     // set up to handle when 
     handleClick(e) {
         console.log('this is happening')
-        console.log(e)
+        console.log(e.target)
 
 
         // when a location list item is clicked 
@@ -114,8 +115,10 @@ class FinderContainer extends Component {
 
         }
         // if a result favorite is clicked
-        if (e.target.classList.contains('favoriteResult')) {
-            // console.log('a fav item was clicked')
+        // if (e.target.classList.contains('favoriteResult')) {
+        if (e.target.classList.contains('resultFavorite')) {
+
+            console.log('a fav item was clicked')
             // console.log(e.target.getAttribute('common'))
 
             // console.log(e.target.getAttribute('name'),
@@ -131,6 +134,7 @@ class FinderContainer extends Component {
                 type: e.target.getAttribute('nature_option'),
                 photo_url: e.target.getAttribute('url')
             }
+            console.log(favObj)
             fetch('/favorites', {
                 method: 'POST',
                 headers: {
@@ -140,7 +144,9 @@ class FinderContainer extends Component {
             })
                 .then(response => response.json())
                 .then((data) => {
-                    console.log('what came back from db stuff')
+                    console.log('over here 2')
+
+                    console.log('this db check', data)
                 })
 
 

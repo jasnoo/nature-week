@@ -5,7 +5,8 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    width:1400px;
+    min-width: 900px;
+    max-width:1400px;
     margin:auto;
 
 }
