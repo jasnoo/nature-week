@@ -1,16 +1,26 @@
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
 
-class Header extends Component {
+// class Header extends Component {
 
 
-    render() {
-        return (
-            <div className='header'>
-                <h1>One Week Of Nature</h1>
-                <p></p>
-            </div>
-        )
-    }
+//     render() {
+//         return (
+//             <div className='header'>
+//                 <h1>One Week Of Nature</h1>
+//                 <p></p>
+//             </div>
+//         )
+//     }
+// }
+
+// export default Header;
+
+import React from "react"
+export default function App() {
+    return (
+        <div className='header'>
+            <h1>One Week Of Nature</h1>
+
+        </div>
+    )
 }
-
-export default Header;
