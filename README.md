@@ -1,2 +1,2 @@
 # nature-week
-First react project, see weekly observations using iNaturalist API
+Application to see weekly observations of mushroom, plant, or bird observations local to a user based on observations recorded in iNaturalist
