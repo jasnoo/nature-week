@@ -9,7 +9,6 @@ cookieController.setSSIDCookie = (req, res, next) => {
     console.log('youve enetered SSID cookie creator')
     res.cookie(`ssid=${res.locals.userId}; HttpOnly`);
     console.log('finishing cookieController.setSSIDCookie')
-
     next();
 
 }
