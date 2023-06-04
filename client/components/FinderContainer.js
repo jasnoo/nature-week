@@ -37,20 +37,20 @@ class FinderContainer extends Component {
   }
 
   handleClick(e) {
-    console.log(e.target);
-
     // when a location list item is clicked
     if (e.target.classList.contains("locItem")) {
+      // console.log(e.target.getAttribute('id'))
       let location_id = e.target.getAttribute("id");
-      console.log("e.target.innerText", e.target.innerText);
       this.setState({ location_id: location_id });
       this.setState({ location_input: e.target.innerText });
 
+      // document.getElementById('location').setAttribute('value', 'test')
       document.getElementById("location").value = e.target.innerText; //this.setState.location_input
 
       fetch(`/find/${location_id}/${this.state.nature_option}`)
         .then((response) => response.json())
         .then((data) => {
+          // console.log('data coming through everything', data)
           this.setState({ species_list: data.results });
           this.setState({ sinceDate: ` between ${data.date} - today` });
           this.setState({ location_results: [] });
@@ -63,6 +63,8 @@ class FinderContainer extends Component {
     if (e.target.classList.contains("natureOption")) {
       let natureOption = e.target.id;
       this.setState({ nature_option: natureOption });
+      // document.querySelector('.natureOption').style.backgroundColor = '%FF8C00';
+      // document.getElementById(`${natureOption}`).style.backgroundColor = '#ff5500';
       if (natureOption === "Plantae") {
         this.setState({ headerText: "Plants" });
       } else if (natureOption === "Fungi") {
@@ -71,10 +73,13 @@ class FinderContainer extends Component {
         this.setState({ headerText: "Birds" });
       }
 
+      // document.getElementById('natureOption').style = 'background-color: red;';
+
       if (this.state.location_id !== "") {
         fetch(`/find/${this.state.location_id}/${natureOption}`)
           .then((response) => response.json())
           .then((data) => {
+            // console.log('data coming through everything', data)
             this.setState({ species_list: data.results });
 
             this.setState({ sinceDate: `Seen between ${data.date} - today` });
@@ -85,9 +90,15 @@ class FinderContainer extends Component {
           })
           .catch((e) => console.log(e));
       }
-    }
 
+      // let natureOption = document.getElementById('location').value
+      // this.setState({ location_input: location })
+      // getINaturalist(location)
+    }
+    // if a result favorite is clicked
+    // if (e.target.classList.contains('favoriteResult')) {
     if (e.target.classList.contains("resultFavorite")) {
+
       let favObj = {
         _id: e.target.getAttribute("speciesId"),
         name: e.target.getAttribute("name"),
@@ -95,7 +106,6 @@ class FinderContainer extends Component {
         type: e.target.getAttribute("nature_option"),
         photo_url: e.target.getAttribute("url"),
       };
-      console.log(favObj);
       fetch("/favorites", {
         method: "POST",
         headers: {
@@ -104,11 +114,10 @@ class FinderContainer extends Component {
         body: JSON.stringify(favObj),
       })
         .then((response) => response.json())
-        .then((data) => {
-          console.log("over here 2");
-
-          console.log("this db check", data);
-        });
+        // .then((data) => {
+        // })
+        
+        ;
     }
 
     // next click event behavior can go here
