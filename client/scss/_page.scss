@@ -2,52 +2,46 @@
   margin: 0;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-html{
-    height:100%
+html {
+  height: 100%;
 }
 body {
-    height:100%;
+  height: 100%;
   background-color: darkGreen;
 }
 
-.header  {
+.header {
+  font-family: "Suez One", serif;
 
-    font-family: 'Suez One', serif;
-  
-    background-color: darkGreen;
-    // height:200px;
-    
-    h1 {
-        font-size: 80px;
-          color:$cream;
-        padding:40px 0 0;
-        margin:auto;
-        text-align: center;
-    }
+  background-color: darkGreen;
+  // height:200px;
 
-    
+  h1 {
+    font-size: 80px;
+    color: $cream;
+    padding: 40px 0 0;
+    margin: auto;
+    text-align: center;
+  }
 }
 
-
 .newHeader2 {
-        font-size: 30px;
-          color:$cream;
-       
-        margin:auto;
-        text-align: center;
-    }
-
-
+  font-size: 30px;
+  color: $cream;
+  margin: auto;
+  text-align: center;
+}
 
 .newHeader {
-  padding: 20px 0 0 ;
-   font-family: 'Suez One', serif;
-   color:$cream;
-   text-align: center;
-   font-size:80px;
-
+  padding: 20px 0 0;
+  font-family: "Suez One", serif;
+  color: $cream;
+  text-align: center;
+  font-size: 80px;
 }
