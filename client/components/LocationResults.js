@@ -1,23 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 
-class LocationResults extends Component {
+function LocationResults({results,handleClick, locationText, locationInput,handleLocationHover}){
 
 
-    render() {
-
-        let locations = this.props.results
+       
         let resultArr = []
-        for (let i = 0; i < locations.length; i++) {
-            resultArr.push(<li className='locItem' id={locations[i]['location_id']} onClick={this.props.handleClick} >{locations[i]['display_name']}</li>)
+        for (let i = 0; i < results.length; i++) {
+            resultArr.push(<li key={results[i]['location_id']} className='locItem' id={results[i]['location_id']} onClick={handleClick} >{results[i]['display_name']}</li>)
         }
 
-        return (
+        return locationInput  ?
+        (
             <ul className='LocationResults'>
                 {resultArr}
             </ul >
         )
-    }
+        : <></>
+        
 }
+
 
 export default LocationResults;
