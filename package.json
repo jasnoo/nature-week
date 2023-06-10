@@ -36,7 +36,7 @@
     "html-webpack-plugin": "^5.5.0",
     "nodemon": "^2.0.7",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.10.0",
+    "react-router-dom": "^6.12.1",
     "sass": "^1.60.0",
     "sass-loader": "^13.2.2",
     "style-loader": "^3.3.2",
