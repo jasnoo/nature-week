@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import LocationResults from "./LocationResults";
 
+
 class Finder extends Component {
   render() {
     let locations = this.props.locationResults;

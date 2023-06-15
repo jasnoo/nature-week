@@ -1,17 +1,20 @@
-import React, { Component } from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from 'react';
+import { Routes, Route } from "react-router-dom";
 import FinderContainer from './FinderContainer.js'
-import LocationResults from './LocationResults.js';
-
+import Home from './Home.js';
+import ResultsContainer2 from './ResultsContainer2.js';
 
 function App() {
     return (
-        <BrowserRouter>
+        
+        <>
             <FinderContainer />
             <Routes>
-                <Route path="/" element = {LocationResults}/>
+                <Route path="/results/:location/:species" element={<ResultsContainer2 />} />
+                <Route path="/" element={<Home />} />
             </Routes>
-        </BrowserRouter>
+        </>
+            
     )
 }
 

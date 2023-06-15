@@ -2,7 +2,7 @@ import React, { Component, useState, useEffect } from "react";
 import ResultsContainer from "./ResultsContainer.js";
 import Finder from "./Finder.js";
 import LocationResults from "./LocationResults.js";
-import {BrowserRouter, Routes,Route} from 'react-router-dom'
+import { Link} from 'react-router-dom'
 
 function FinderContainer(){
   const [locationInput, setLocationInput] = useState('')
@@ -107,7 +107,7 @@ return (
             <LocationResults results={locationList} locationInput={locationInput} locationText={locationText} handleClick={handleLocationClick}/>
           </div>
         </div>
-
+    <Link to={`/results/${locationId}/${natureOption}/`}>Find</Link>
         <ResultsContainer
           natureOption={headerText}
           sinceDate={sinceDate}
