@@ -10,8 +10,6 @@ favoriteController.checkFav = (req, res, next) => {
 
     let { _id, name, common_name, type, photo_url } = req.body;
 
-
-
     Favorite.findOne({ _id: _id }).exec()
         .then(data => {
             if (data) {

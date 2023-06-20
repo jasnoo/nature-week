@@ -50,7 +50,7 @@ class Result extends Component {
                     common={this.props.common} className='favoriteResult' onClick={this.props.handleClick} >Favorite <span>⭐</span>
                 </div> */}
 
-        <ResultFavorite
+        {/* <ResultFavorite
           url={this.props.url}
           nature_option={this.props.nature_option}
           speciesID={this.props.speciesID}
@@ -61,7 +61,7 @@ class Result extends Component {
           onClick={this.props.handleClick}
         >
           Favorite <span>⭐</span>
-        </ResultFavorite>
+        </ResultFavorite> */}
       </div>
     );
   }

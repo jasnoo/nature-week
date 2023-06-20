@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import Result from "./Result.js";
 
-function ResultsContainer({speciesList, sinceDate, natureOption}) {
+function ResultsContainer({ speciesList, sinceDate, natureOption, handleClick }) {
   let resultArr
   if  (speciesList!==null) {
   resultArr = speciesList.map(x=> {
       return (
         <Result
-          // handleClick={this.props.handleClick}
+          handleClick={handleClick}
           key={`result-${x.id}`}
           count={x.count}
           name={x.name}

@@ -86,6 +86,31 @@ useEffect(()=>{
     
   }
 
+  function handleFavoriteClick(e) {
+    let favObj = {
+        _id: e.target.getAttribute("speciesId"),
+        name: e.target.getAttribute("name"),
+        common_name: e.target.getAttribute("common"),
+        type: e.target.getAttribute("nature_option"),
+        photo_url: e.target.getAttribute("url"),
+      };
+      console.log(favObj);
+      fetch("/favorites", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(favObj),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("over here 2");
+
+          console.log("this db check", data);
+        });
+    }
+  
+
 
 return (
   <div className='finderContainer'>
@@ -106,9 +131,10 @@ return (
             <input type='text' id='location' name='loc' onChange={e=>handleLocationChange(e)} value={locationInput}/>
             {showLocations ? <LocationResults results={locationList} locationInput={locationInput} locationText={locationText} handleClick={handleLocationClick} /> : null}
         {showResults ? null : (
-          <div class='infoText'>Find out what plants, mushrooms, or birds have been spotted near you by the <a href="https://www.inaturalist.org/">iNaturalist</a> community this week by choosing an option and inputting your location.</div>
+          <div className='infoText'>Find out what plants, mushrooms, or birds have been spotted near you by the <a href="https://www.inaturalist.org/">iNaturalist</a> community this week by choosing an option and inputting your location.</div>
         )
       }
+
 
 
           </div>
@@ -118,6 +144,7 @@ return (
           natureOption={headerText}
           sinceDate={sinceDate}
           speciesList={speciesList}
+      handleClick={handleFavoriteClick}
         />
       </div>
 )
