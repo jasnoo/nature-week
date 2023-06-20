@@ -1,42 +1,35 @@
 import React, { Component } from "react";
 
-class ResultFavorite extends Component {
-  render() {
-    let text = "";
-    let fav = "";
-    if (this.props.isFavorite) {
-      fav = "regStar";
-      text = `★ In Your Favorites `;
-    } else {
-      fav = "favStar";
+function ResultFavorite(props) {
 
-      text = `Add To Favorites`;
-    }
+  let text = "";
+  let fav = "";
+  if (props.isFavorite) {
+    fav = "regStar";
+    text = `★ In Your Favorites `;
+  } else {
+    fav = "favStar";
 
-    return (
-      // <div key={`fav-${this.props.speciesID}`} className='resultFavorite ' >Favorite <span>⭐</span></div >
-      <div
-        className='resultFavText'
-        url={this.props.url}
-        isFavorite={this.props.isFavorite}
-        nature_option={this.props.nature_option}
-        name={this.props.name}
-        common={this.props.common}
-        key={`fav-${this.props.speciesID}`}
-        speciesID={this.props.speciesID}
-        id={`fav-${this.props.speciesID}`}
-        className={`resultFavorite`}
-      >
-        {/* <span className={fav}>☆★</span> */}
-
-        {text}
-      </div>
-
-      // <div isFavorite={this.props.isFavorite} onClick={this.props.handleClick} key={`fav-${this.props.speciesID}`} className={`resultFavorite`} >
-      //     <span className={fav}>☆★</span>
-      //     {text}</div >
-    );
+    text = `Add To Favorites`;
   }
-}
+  
+  return (
+    <div
+      // className='resultFavText'
+      url={props.url}
+      isFavorite={props.isFavorite}
+      nature_option={props.nature_option}
+      name={props.name}
+      common={props.common}
+      key={`fav-${props.speciesID}`}
+      speciesID={props.speciesID}
+      id={`fav-${props.speciesID}`}
+      className={`resultFavorite`}
+    >
+      {/* <span className={fav}>☆★</span> */}
 
+      {text}
+    </div>
+  )
+}
 export default ResultFavorite;
