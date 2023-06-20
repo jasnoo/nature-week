@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import ResultFavorite from "./ResultFavorite";
+import React, { Component } from "react";
+import ResultFavorite from "./ResultFavorite";
 
 class Result extends Component {
   constructor(props) {
@@ -28,7 +30,20 @@ class Result extends Component {
       this.getUpdatedFavorite();
     }
   }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState !== this.state) {
+      this.getUpdatedFavorite();
+    }
+  }
 
+  render() {
+    return (
+      <div
+        className='result'
+        onClick={this.props.handleClick}
+        isFavorite={this.state.isFavorite}
+      >
+        <h2>{this.props.common}</h2>
   render() {
     return (
       <div
@@ -41,7 +56,11 @@ class Result extends Component {
         <h3>{this.props.name}</h3>
         <img src={this.props.url}></img>
         <h4>Seen {this.props.count} this week </h4>
+        <h3>{this.props.name}</h3>
+        <img src={this.props.url}></img>
+        <h4>Seen {this.props.count} this week </h4>
 
+        {/* <div url={this.props.url}
         {/* <div url={this.props.url}
                     nature_option={this.props.nature_option}
                     speciesID={this.props.speciesID}
@@ -68,3 +87,4 @@ class Result extends Component {
 }
 
 export default Result;
+

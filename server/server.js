@@ -29,15 +29,11 @@ app.use(
   "/find/:location_id/:nature_option",
   finderController.getNatureData,
   (req, res) => {
-    // res.status(200).json(res.locals.results);
-    // console.log('res.locals.results in server.js', res.locals.results)
     res.json({ results: res.locals.results, date: res.locals.date });
-    // res.status(200).send('wow this worked')
   }
 );
 
 app.post("/favorites", favoriteController.checkFav, (req, res) => {
-  // console.log(res.locals.inFavorites)
   res.status(200);
 });
 

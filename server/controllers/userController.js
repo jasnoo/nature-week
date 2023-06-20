@@ -5,7 +5,7 @@ const userController = {};
 
 userController.createUser = (req, res, next) => {
   // i expect username password to come through on req, body
-  console.log("start userController.createUser");
+  // console.log("start userController.createUser");
   const { username, password } = req.body;
 
   try {
@@ -22,9 +22,9 @@ userController.createUser = (req, res, next) => {
             password: password,
             favorite: [],
           }).then((data) => {
-            console.log("THIS IS THE USER ID: ", data["_id"]);
+            // console.log("THIS IS THE USER ID: ", data["_id"]);
             res.locals.userId = data["_id"];
-            console.log("fin userController.createUser");
+            // console.log("fin userController.createUser");
 
             next();
           });
@@ -40,21 +40,16 @@ userController.verifyUser = (req, res, next) => {
 
   // pulling out the username and password from the user inputted sign in field
   let { username, password } = req.body;
-  console.log("Password before hash", password);
   // let salt = bcrypt.genSaltSync(10)
   password = bcrypt.hashSync(password, salt);
   try {
-    console.log("password after hash", password);
     // querying the database to see if the username exists
     User.findOne({ username: username })
       .exec()
       // if the username exists (note we used .find() instead of .findAll() so this return an empty array)
       .then((data) => {
-        console.log("password check");
         if (data) {
           // block for if something was found in DB
-          console.log("data.password: ", data.password);
-          console.log("password: ", password);
           if (data.password === password) {
             res.locals.userId = data["_id"];
             next();

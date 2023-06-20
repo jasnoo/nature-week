@@ -94,7 +94,6 @@ useEffect(()=>{
         type: e.target.getAttribute("nature_option"),
         photo_url: e.target.getAttribute("url"),
       };
-      console.log(favObj);
       fetch("/favorites", {
         method: "POST",
         headers: {
@@ -103,11 +102,10 @@ useEffect(()=>{
         body: JSON.stringify(favObj),
       })
         .then((response) => response.json())
-        .then((data) => {
-          console.log("over here 2");
-
-          console.log("this db check", data);
-        });
+        // .then((data) => {
+        // })
+        
+        ;
     }
   
 
