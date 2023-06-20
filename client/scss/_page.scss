@@ -31,12 +31,14 @@ body {
   }
 }
 
-.newHeader2 {
-  font-size: 30px;
-  color: $cream;
-  margin: auto;
-  text-align: center;
+a { 
+ color: $cream;
 }
+
+.infoText {
+  margin: 40px auto;
+}
+
 
 .newHeader {
   padding: 20px 0 0;

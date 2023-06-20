@@ -6,26 +6,30 @@ const favoriteController = {};
 favoriteController.checkFav = (req, res, next) => {
   let { _id, name, common_name, type, photo_url } = req.body;
 
-  Favorite.findOne({ _id: _id })
-    .exec()
-    .then((data) => {
-      if (data) {
-        Favorite.deleteOne({ _id: _id }).then((data) => {
-          res.locals.inFavorites = false;
-          next();
-        });
-      }
-      // if the user doesnt exist
-      else {
-        Favorite.create({
-          _id: _id,
-          name: name,
-          common_name: common_name,
-          type: type,
-          photo_url: photo_url,
-        });
-        // console.log('added to DB')
-        res.locals.inFavorites = true;
+    Favorite.findOne({ _id: _id }).exec()
+        .then(data => {
+            if (data) {
+                // console.log('found to DB')
+
+
+                Favorite.deleteOne({ _id: _id })
+                    .then((data) => {
+                        // console.log('removed from db')
+                        res.locals.inFavorites = false;
+                        next();
+                    })
+
+            }
+            // if the user doesnt exist
+            else {
+                // console.log('creating new fav in db')
+
+                Favorite.create({
+                    _id: _id, name: name, common_name: common_name, type: type, photo_url: photo_url
+
+                })
+                // console.log('added to DB')
+                res.locals.inFavorites = true;
 
         return next();
       }

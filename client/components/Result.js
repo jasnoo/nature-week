@@ -6,29 +6,20 @@ class Result extends Component {
     super(props);
     this.state = {
       isFavorite: false,
-
-      // has_rendered: false,
     };
-    //
+
   }
 
   getUpdatedFavorite() {
     fetch(`/favorites/${this.props.speciesID}`)
       .then((response) => response.json())
       .then((data) => {
-        // console.log('over here 1')
-        // console.log('data coming through everything', data)
         this.setState({ isFavorite: data });
-        // this.setState({ sinceDate: `Seen between ${data.date} - today` })
-        // this.setState({ location_results: [] })
-
-        // console.log('componentDidUpdate data:', data)
       })
-    //   .catch((e) => console.log(e));
+      .catch((e) => console.log(e));
   }
 
   componentDidMount() {
-    // console.log('in component did update')
     this.getUpdatedFavorite();
   }
 
@@ -59,7 +50,7 @@ class Result extends Component {
                     common={this.props.common} className='favoriteResult' onClick={this.props.handleClick} >Favorite <span>⭐</span>
                 </div> */}
 
-        <ResultFavorite
+        {/* <ResultFavorite
           url={this.props.url}
           nature_option={this.props.nature_option}
           speciesID={this.props.speciesID}
@@ -70,7 +61,7 @@ class Result extends Component {
           onClick={this.props.handleClick}
         >
           Favorite <span>⭐</span>
-        </ResultFavorite>
+        </ResultFavorite> */}
       </div>
     );
   }

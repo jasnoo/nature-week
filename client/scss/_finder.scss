@@ -32,6 +32,14 @@
     border: 2px solid $darkOrange;
     list-style-type: none;
     background-color: darkOrange;
+    color:$cream;
+
+    .unselected {
+      background-color: darkOrange;
+    }
+    .selected {
+      background-color: $red;
+    }
   }
 
   li:hover {
