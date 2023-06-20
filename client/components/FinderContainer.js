@@ -2,7 +2,7 @@ import React, { Component, useState, useEffect } from "react";
 import ResultsContainer from "./ResultsContainer.js";
 import Finder from "./Finder.js";
 import LocationResults from "./LocationResults.js";
-import { Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 function FinderContainer(){
   const [locationInput, setLocationInput] = useState('')
@@ -14,8 +14,10 @@ function FinderContainer(){
   const [headerText, setHeaderText] = useState("Nature")
   const [natureOption, setNatureOption] = useState('')
   const [sinceDate, setSinceDate] = useState('')
+  const [showLocations, setShowLocations] = useState(true)
+  const [showResults, setShowResults] = useState(false)
 
-
+// when user types location
 useEffect(()=>{
   function getINaturalist(id) {
     fetch(
@@ -32,14 +34,20 @@ useEffect(()=>{
       })
       .catch((error) => console.error(error));
   }
- 
     getINaturalist(locationInput)
   
 },[locationInput])
 
 
+
+
+
+// when user has chosen a location and a nature option
 useEffect(()=>{
+
+
   if (natureOption && locationId) {
+    setShowResults(true)
     fetch(`/find/${locationId}/${natureOption}`)
         .then((response) => response.json())
         .then((data) => {
@@ -48,13 +56,10 @@ useEffect(()=>{
           setSinceDate(` between ${data.date} - today`)
         })
         .catch((e) => console.log(e));
-
-  }
-
-        
+  }     
+  
 
 },[locationId, natureOption])
-
 
 
   //specifically whne one of the 3 buttons are clicked
@@ -69,6 +74,7 @@ useEffect(()=>{
   }
 
   function handleLocationChange(e) {
+    setShowLocations(true)
     setLocationInput(e.target.value)
   }
 
@@ -76,16 +82,10 @@ useEffect(()=>{
     setLocationInput(e.target.innerText)
     setLocationText(e.target.innerText)
     setLocationId(e.target.id)
-    setLocationList([])
+    setShowLocations(false)  
     
   }
 
-
-  // if (locationList.length === 0) {
-  //   // locArr = ''
-  // } else {
-  //   // locArr =  locationList.map((x) => {<li locID={x.location_id}>{x.display_name}</li>})
-  // }
 
 return (
   <div className='finderContainer'>
@@ -95,19 +95,25 @@ return (
         </h1>
 
         <ul className='natureOptions'>
-          <li className='natureOption' onClick={(e) => natureFilter(e)} id='Birds'>🐦 Birds</li>
-          <li className='natureOption' onClick={(e) => natureFilter(e)} id='Plants'>🌱 Plants</li>
-          <li className='natureOption' onClick={(e) => natureFilter(e)} id='Mushrooms'> 🍄 Mushrooms </li>
+      <li className='natureOption' onClick={(e) => natureFilter(e)} id='Birds'>🐦 Birds </li>
+      <li className='natureOption' onClick={(e) => natureFilter(e)} id='Plants' >🌱 Plants</li>
+      <li className='natureOption' onClick={(e) => natureFilter(e)} id='Mushrooms' > 🍄 Mushrooms </li>
         </ul>
 
         <div className='finder'>
           <div id='locationBox'>
             <label htmlFor='location'> Location:</label>
             <input type='text' id='location' name='loc' onChange={e=>handleLocationChange(e)} value={locationInput}/>
-            <LocationResults results={locationList} locationInput={locationInput} locationText={locationText} handleClick={handleLocationClick}/>
+            {showLocations ? <LocationResults results={locationList} locationInput={locationInput} locationText={locationText} handleClick={handleLocationClick} /> : null}
+        {showResults ? null : (
+          <div class='infoText'>Find out what plants, mushrooms, or birds have been spotted near you by the <a href="https://www.inaturalist.org/">iNaturalist</a> community this week by choosing an option and inputting your location.</div>
+        )
+      }
+
+
           </div>
         </div>
-    <Link to={`/results/${locationId}/${natureOption}/`}>Find</Link>
+    {/* <Link to={`/results/${locationId}/${natureOption}/`}>Find</Link> */}
         <ResultsContainer
           natureOption={headerText}
           sinceDate={sinceDate}
