@@ -10,6 +10,8 @@
 
 html {
   height: 100%;
+    width:100%;
+
 }
 body {
   height: 100%;
@@ -41,9 +43,9 @@ a {
 
 
 .newHeader {
-  padding: 20px 0 0;
+  padding: 20px 10px 0;
   font-family: "Suez One", serif;
   color: $cream;
   text-align: center;
-  font-size: 80px;
+  font-size: 70px;
 }
