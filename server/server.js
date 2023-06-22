@@ -24,12 +24,13 @@ try {
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());
+app.use(cors())
 
 app.use(
   "/find/:location_id/:nature_option",
   finderController.getNatureData,
   (req, res) => {
-    res.json({ results: res.locals.results, date: res.locals.date });
+    res.status(200).json({ results: res.locals.results, date: res.locals.date });
   }
 );
 
@@ -38,11 +39,8 @@ app.post("/favorites", favoriteController.checkFav, (req, res) => {
 });
 
 app.get("/favorites/:id", favoriteController.checkIfFavorite, (req, res) => {
-  // console.log('req:', req.body)
-  // console.log(res.locals.isFavorite)
-  res.send(res.locals.isFavorite);
-
-  // res.status(200).send(res.locals.isFavorite)
+  // res.send(res.locals.isFavorite);
+  res.status(200).send(res.locals.isFavorite)
 });
 
 // statically serve everything in the build folder on the route '/build'

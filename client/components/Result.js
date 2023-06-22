@@ -10,24 +10,24 @@ class Result extends Component {
 
   }
 
-  getUpdatedFavorite() {
-    fetch(`/favorites/${this.props.speciesID}`)
-      .then((response) => response.json())
-      .then((data) => {
-        this.setState({ isFavorite: data });
-      })
-      .catch((e) => console.log(e));
-  }
+  // getUpdatedFavorite() {
+  //   fetch(`/favorites/${this.props.speciesID}`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       this.setState({ isFavorite: data });
+  //     })
+  //     .catch((e) => console.log(e));
+  // }
 
   componentDidMount() {
-    this.getUpdatedFavorite();
+    // this.getUpdatedFavorite();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState !== this.state) {
-      this.getUpdatedFavorite();
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState !== this.state) {
+  //     this.getUpdatedFavorite();
+  //   }
+  // }
 
   render() {
     return (
