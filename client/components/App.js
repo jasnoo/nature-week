@@ -114,7 +114,7 @@ function App() {
         <div className="container">
             <div className='finderContainer'>
                 <h1 className='newHeader'>
-                    This Week In{" "}
+                    This Week in{" "}
                     <span className='titleOption'>{headerText}</span>
                 </h1>
                 <div className='infoText'>Find out what plants, mushrooms, and birds have been spotted near you by the <a href="https://www.inaturalist.org/">iNaturalist</a> community this week!</div>
