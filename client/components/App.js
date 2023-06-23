@@ -5,6 +5,7 @@ import ErrorMessage from "./ErrorMessage.js";
 import Footer from "./Footer.js";
 
 
+
 function App() {
     const [locationInput, setLocationInput] = useState('')
     const [location, setLocation] = useState({})
