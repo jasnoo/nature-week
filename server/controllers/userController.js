@@ -13,7 +13,7 @@ userController.createUser = (req, res, next) => {
       .exec()
       .then((data) => {
         if (data) {
-          console.log("user exists");
+          // console.log("user exists");
           res.sendFile(path.resolve(__dirname, "../../client/index.html"));
           // gonna have to make this login page at some point
         } else {

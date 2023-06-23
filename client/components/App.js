@@ -46,7 +46,6 @@ function App() {
 
         if (natureOption && locationId) {
             setShowResults(true)
-            console.log('time to fetch')
             fetch(`/find/${locationId}/${natureOption}`)
                 .then((response) => response.json())
                 .then((data) => {
