@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ResultsContainer from "./ResultsContainer.js";
 import LocationResults from "./LocationResults.js";
 import ErrorMessage from "./ErrorMessage.js";
+import Footer from "./Footer.js";
 
 function FinderContainer() {
   const [locationInput, setLocationInput] = useState('')
@@ -39,12 +40,8 @@ function FinderContainer() {
   }, [locationInput])
 
 
-  // when user has chosen a location and a nature option
+  // when user has chosen a location
   useEffect(() => {
-
-    // if (!natureOption && locationId) {
-    //   setError("Please choose a nature option!")
-    // }
 
     if (natureOption && locationId) {
       setShowResults(true)
@@ -72,11 +69,13 @@ function FinderContainer() {
     setHeaderText(e.target.id)
   }
 
+  // when user changes locations
   function handleLocationChange(e) {
     setShowLocations(true)
     setLocationInput(e.target.value)
   }
 
+  // when user clicks on a location
   function handleLocationClick(e) {
     setLocationInput(e.target.innerText)
     setLocationText(e.target.innerText)
@@ -111,39 +110,44 @@ function FinderContainer() {
   // }
 
   return (
-    <div className='finderContainer'>
-      <h1 className='newHeader'>
-        One Week Of{" "}
-        <span className='titleOption'>{headerText}</span>
-      </h1>
+    <div className="container">
+      <div className='finderContainer'>
+        <h1 className='newHeader'>
+          One Week Of{" "}
+          <span className='titleOption'>{headerText}</span>
+        </h1>
 
-      <ul className='natureOptions'>
-        <li className='natureOption' onClick={(e) => natureFilter(e)} id='Birds'>🐦 Birds </li>
-        <li className='natureOption' onClick={(e) => natureFilter(e)} id='Plants' >🌱 Plants</li>
-        <li className='natureOption' onClick={(e) => natureFilter(e)} id='Mushrooms' > 🍄 Mushrooms </li>
-      </ul>
-      <div className='finder'>
-        <div id='locationBox'>
-          <label htmlFor='location'> Location:</label>
-          <input type='text' id='location' name='loc' onChange={e => handleLocationChange(e)} value={locationInput} />
-          <ErrorMessage error={error} />
+        <ul className='natureOptions'>
+          <li className='natureOption' onClick={(e) => natureFilter(e)} id='Birds'>🐦 Birds </li>
+          <li className='natureOption' onClick={(e) => natureFilter(e)} id='Plants' >🌱 Plants</li>
+          <li className='natureOption' onClick={(e) => natureFilter(e)} id='Mushrooms' > 🍄 Mushrooms </li>
+        </ul>
+        <div className='finder'>
+          <div id='locationBox'>
+            <label htmlFor='location'> Location:</label>
+            <input type='text' id='location' name='loc' onChange={e => handleLocationChange(e)} value={locationInput} />
+            <ErrorMessage error={error} />
 
-          {showLocations ? <LocationResults results={locationList} locationInput={locationInput} locationText={locationText} handleClick={handleLocationClick} /> : null}
-          {showResults ? null : (
-            <div className='infoText'>Find out what plants, mushrooms, or birds have been spotted near you by the <a href="https://www.inaturalist.org/">iNaturalist</a> community this week by choosing an option and inputting your location.</div>
-          )
-          }
+            {showLocations ? <LocationResults results={locationList} locationInput={locationInput} locationText={locationText} handleClick={handleLocationClick} /> : null}
+            {showResults ? null : (
+              <div className='infoText'>Find out what plants, mushrooms, or birds have been spotted near you by the <a href="https://www.inaturalist.org/">iNaturalist</a> community this week by inputting your location and optionally choosing a nature option.</div>
+            )
+            }
+          </div>
+
         </div>
+        <ResultsContainer
+          natureOption={headerText}
+          sinceDate={sinceDate}
+          speciesList={speciesList}
+        // temporarily removing favorite functionality 
+        // handleClick={handleFavoriteClick}
+        />
 
       </div>
-      <ResultsContainer
-        natureOption={headerText}
-        sinceDate={sinceDate}
-        speciesList={speciesList}
-      // temporarily removing favorite functionality 
-      // handleClick={handleFavoriteClick}
-      />
+      <Footer />
     </div>
+
   )
 
 }
