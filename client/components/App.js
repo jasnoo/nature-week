@@ -114,7 +114,7 @@ function App() {
         <div className="container">
             <div className='finderContainer'>
                 <h1 className='newHeader'>
-                    One Week Of{" "}
+                    This Week In{" "}
                     <span className='titleOption'>{headerText}</span>
                 </h1>
 
