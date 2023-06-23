@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+// currently not in use 
+
 function ResultFavorite(props) {
 
   let text = "";

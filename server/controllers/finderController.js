@@ -1,6 +1,8 @@
 const finderController = {}
 
 finderController.getNatureData = (req, res, next) => {
+    console.log('in finder controller')
+
     const now = new Date();
     const weekAgo = new Date(now.getTime() - 604800)
     const weekAgoStr = `${weekAgo.getFullYear()}-${weekAgo.getMonth()}-${weekAgo.getDate()}`
