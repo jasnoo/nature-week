@@ -1,8 +1,7 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ResultsContainer from "./ResultsContainer.js";
-import Finder from "./Finder.js";
 import LocationResults from "./LocationResults.js";
-import { Link } from 'react-router-dom'
+import ErrorMessage from "./ErrorMessage.js";
 
 function FinderContainer() {
   const [locationInput, setLocationInput] = useState('')
@@ -12,10 +11,11 @@ function FinderContainer() {
   const [locationList, setLocationList] = useState([])
   const [speciesList, setSpeciesList] = useState(null)
   const [headerText, setHeaderText] = useState("Nature")
-  const [natureOption, setNatureOption] = useState('')
+  const [natureOption, setNatureOption] = useState('all')
   const [sinceDate, setSinceDate] = useState('')
   const [showLocations, setShowLocations] = useState(true)
   const [showResults, setShowResults] = useState(false)
+  const [error, setError] = useState(null)
 
   // when user types location
   useEffect(() => {
@@ -42,6 +42,9 @@ function FinderContainer() {
   // when user has chosen a location and a nature option
   useEffect(() => {
 
+    // if (!natureOption && locationId) {
+    //   setError("Please choose a nature option!")
+    // }
 
     if (natureOption && locationId) {
       setShowResults(true)
@@ -107,8 +110,6 @@ function FinderContainer() {
   //     ;
   // }
 
-
-
   return (
     <div className='finderContainer'>
       <h1 className='newHeader'>
@@ -121,20 +122,19 @@ function FinderContainer() {
         <li className='natureOption' onClick={(e) => natureFilter(e)} id='Plants' >🌱 Plants</li>
         <li className='natureOption' onClick={(e) => natureFilter(e)} id='Mushrooms' > 🍄 Mushrooms </li>
       </ul>
-
       <div className='finder'>
         <div id='locationBox'>
           <label htmlFor='location'> Location:</label>
           <input type='text' id='location' name='loc' onChange={e => handleLocationChange(e)} value={locationInput} />
+          <ErrorMessage error={error} />
+
           {showLocations ? <LocationResults results={locationList} locationInput={locationInput} locationText={locationText} handleClick={handleLocationClick} /> : null}
           {showResults ? null : (
             <div className='infoText'>Find out what plants, mushrooms, or birds have been spotted near you by the <a href="https://www.inaturalist.org/">iNaturalist</a> community this week by choosing an option and inputting your location.</div>
           )
           }
-
-
-
         </div>
+
       </div>
       <ResultsContainer
         natureOption={headerText}
