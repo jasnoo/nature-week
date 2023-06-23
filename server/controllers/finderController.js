@@ -9,8 +9,8 @@ finderController.getNatureData = (req, res, next) => {
     req.params.nature_option === "all" ? option = `iconic_taxa%5B%5D=Fungi&iconic_taxa%5B%5D=Plantae&iconic_taxa%5B%5D=Aves` : option = `iconic_taxa%5B%5D=${req.params.nature_option}`
 
 
-    // fetch(`https://api.inaturalist.org/v1/observations/species_counts?verifiable=true&spam=false&quality_grade=research&d1=${weekAgoStr}&locale=en-US&per_page=25&place_id=${req.params.location_id}&${option}`)
-    fetch('https://api.inaturalist.org/v1/observations/species_counts?verifiable=true&spam=false&quality_grade=research&d1=2023-04-04&iconic_taxa%5B%5D=Fungi&locale=en-US&per_page=5' + new URLSearchParams({ place_id: req.params.id }))
+    fetch(`https://api.inaturalist.org/v1/observations/species_counts?verifiable=true&spam=false&quality_grade=research&d1=${weekAgoStr}&locale=en-US&per_page=25&place_id=${req.params.location_id}&${option}`)
+        // fetch('https://api.inaturalist.org/v1/observations/species_counts?verifiable=true&spam=false&quality_grade=research&d1=2023-04-04&iconic_taxa%5B%5D=Fungi&locale=en-US&per_page=5' + new URLSearchParams({ place_id: req.params.id }))
         .then(response => response.json())
         .then((data) => {
             let speciesArr = []
