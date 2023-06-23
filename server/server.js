@@ -25,6 +25,7 @@ require('dotenv').config();
 const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors())
 
