@@ -9,10 +9,9 @@ function ResultFavorite(props) {
     text = `★ In Your Favorites `;
   } else {
     fav = "favStar";
-
     text = `Add To Favorites`;
   }
-  
+
   return (
     <div
       // className='resultFavText'
