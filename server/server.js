@@ -29,8 +29,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors())
 
-app.use(
-  "/find/:location_id/:nature_option",
+app.use("/find/:location_id/:nature_option",
   finderController.getNatureData,
   (req, res) => {
     res.status(200).json({ results: res.locals.results, date: res.locals.date });
