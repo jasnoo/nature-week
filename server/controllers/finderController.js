@@ -1,3 +1,4 @@
+import fetch from "node-fetch";
 const finderController = {}
 
 finderController.getNatureData = (req, res, next) => {
