@@ -9,18 +9,20 @@ const userController = require("../server/controllers/userController.js");
 const cookieController = require("../server/controllers/cookieController.js");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+require('dotenv').config();
 
-// const mongoURI = 'mongodb://localhost:27017/natureweek';
-// const mongoURI = process.env.NODE_ENV === 'test' ? 'mongodb://localhost/natureweek' : 'mongodb://localhost/natureweek';
-try {
-  mongoose
-    .connect("mongodb://localhost:27017/natureweek")
-    .then(console.log("db connection"));
-} catch {
-  (err) => console.log(error);
-}
+// try {
+//   mongoose
+//     .connect(process.env.MONGO_URI, {
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true
+//     })
+//     .then(console.log("Connected to MongoDB"));
+// } catch {
+//   (err) => console.log(error);
+// }
 
-// const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());

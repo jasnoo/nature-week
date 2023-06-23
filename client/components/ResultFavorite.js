@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+// currently not in use 
+
 function ResultFavorite(props) {
 
   let text = "";
@@ -9,10 +11,9 @@ function ResultFavorite(props) {
     text = `★ In Your Favorites `;
   } else {
     fav = "favStar";
-
     text = `Add To Favorites`;
   }
-  
+
   return (
     <div
       // className='resultFavText'
