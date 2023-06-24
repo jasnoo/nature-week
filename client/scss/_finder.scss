@@ -16,7 +16,7 @@
 
   .finder {
     min-width: 300px;
-    width: 80%;
+    max-width:400px;
     margin: auto;
     label {
       margin-right: 10px;
@@ -58,7 +58,7 @@
   
 
 #locationBox {
-  max-width: 800px;
+  max-width: 400px;
   margin: 10px auto;
   text-align: center;
 
@@ -71,24 +71,24 @@
     font-size: 20px;
     height: 40px;
     // width: 600px;
-    // maximum-width: 600px;
-    min-width: 300px;
+    min-width: 95%;
   }
 }
 
 .LocationResults {
-  margin: 5px auto;
+  margin: 0px auto 0 10px;;
+  padding:2px;
   font-size: 16px;
   text-align: left;
-  width: 500px;
+  width: 100%;
+  // width: 500px;
 
   li {
-    margin-left: 20px;
+    text-align: left;
+    width:100%;
     padding: 4px;
     border-radius: 10px;
-    // border: 2px solid $darkOrange;
     list-style-type: none;
-    // background-color: darkOrange;
   }
 
   li:hover {
@@ -107,15 +107,20 @@
   font-size: 14px;
 }
 .infoText {
-  margin: 40px auto;
+  margin: 20px auto ;
+  max-width: 600px;
+  padding: 0 10px;
+  font-size:16px;
+  text-align: center;
 }
 
 .newHeader {
-  padding: 20px 10px 0;
+  padding: 25px 10px 0;
   font-family: "Suez One", serif;
   color: $cream;
   text-align: center;
   font-size: 70px;
+  line-height: 1.2em;
 }
 
 

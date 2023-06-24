@@ -117,6 +117,7 @@ function App() {
                     This Week In{" "}
                     <span className='titleOption'>{headerText}</span>
                 </h1>
+                <div className='infoText'>Find out what plants, mushrooms, and birds have been spotted near you by the <a href="https://www.inaturalist.org/">iNaturalist</a> community this week!</div>
 
                 <ul className='natureOptions'>
                     <li className='natureOption' onClick={(e) => natureFilter(e)} id='Birds'>🐦 Birds </li>
@@ -125,17 +126,11 @@ function App() {
                 </ul>
                 <div className='finder'>
                     <div id='locationBox'>
-                        <label htmlFor='location'> Location:</label>
-                        <input type='text' id='location' name='loc' onChange={e => handleLocationChange(e)} value={locationInput} />
+                        {/* <label htmlFor='location'> Location:</label> */}
+                        <input type='text' id='location' name='loc' placeholder="Your Location" onChange={e => handleLocationChange(e)} value={locationInput} />
                         <ErrorMessage error={error} />
-
                         {showLocations ? <LocationResults results={locationList} locationInput={locationInput} locationText={locationText} handleClick={handleLocationClick} /> : null}
-                        {showResults ? null : (
-                            <div className='infoText'>Find out what plants, mushrooms, or birds have been spotted near you by the <a href="https://www.inaturalist.org/">iNaturalist</a> community this week by inputting your location and optionally choosing a nature option.</div>
-                        )
-                        }
                     </div>
-
                 </div>
                 <ResultsContainer
                     natureOption={headerText}
