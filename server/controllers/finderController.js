@@ -4,8 +4,7 @@ const fetch = require('node-fetch')
 const finderController = {}
 
 finderController.getNatureData = (req, res, next) => {
-    const now = new Date();
-    const weekAgo = new Date(now.getTime() - 604800)
+    const weekAgo = new Date(new Date() - 60 * 60 * 24 * 7 * 1000)
     const weekAgoStr = `${weekAgo.getFullYear()}-${weekAgo.getMonth()}-${weekAgo.getDate()}`
     const displayDate = `${weekAgo.toLocaleString('default', { month: 'short' })} ${weekAgo.getDate()}, ${weekAgo.getFullYear()}`
     let option;
