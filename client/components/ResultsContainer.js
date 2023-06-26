@@ -30,7 +30,7 @@ function ResultsContainer({ speciesList, sinceDate, natureOption, handleClick })
     )
   } else return (
     <div>
-      <h1 className='seenSince'>{`Seen ${sinceDate} `}</h1>
+      <h1 className='seenSince'>{`Seen between`}<br />{`${sinceDate} `}</h1>
       <div className='resultsContainer'>{resultArr || ''}</div>
     </div>
   )

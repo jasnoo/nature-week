@@ -63,7 +63,7 @@ function App() {
                 .then((response) => response.json())
                 .then((data) => {
                     setSpeciesList(data.results)
-                    setSinceDate(` between ${data.date} - today`)
+                    setSinceDate(`${data.date} - today`)
                 })
                 .catch((e) => console.log('error', e));
         }
@@ -169,7 +169,7 @@ function App() {
                     This Week in{" "}
                     <span className='titleOption'>{headerText}</span>
                 </h1>
-                <div className='infoText'>Find out what plants, mushrooms, and birds have been spotted near you by the <a href="https://www.inaturalist.org/">iNaturalist</a> community this week!</div>
+                <div className='infoText'>Find out what has been spotted near you by the <a href="https://www.inaturalist.org/">iNaturalist</a> community this week!</div>
                 {/* nature buttons */}
                 {buttons}
                 <div className='finder'>
