@@ -19,6 +19,18 @@ function App() {
     const [showLocations, setShowLocations] = useState(true)
     const [showResults, setShowResults] = useState(false)
     const [error, setError] = useState(null)
+    const [active, setActive] = useState('');
+
+    // used to change what button is actively selected
+    const changeStyle = (iNatVal) => setActive(iNatVal)
+
+    // maps all options display names, button text, and iNat value
+    const nature = [
+        { name: "Birds", iNat: "Aves", btn: "🐦 Birds" },
+        { name: "Plants", iNat: "Plantae", btn: "🌱 Plants" },
+        { name: "Mushrooms", iNat: "Fungi", btn: "🍄 Mushrooms" },
+        { name: "Insects", iNat: "Insecta", btn: "🐜 Insects" }
+    ];
 
     // when user types location
     useEffect(() => {
@@ -60,15 +72,18 @@ function App() {
 
 
     //specifically whne one of the 3 buttons are clicked
-    function natureFilter(e) {
+    function natureFilter(i, name, iNat) {
         const natureObj = {
             Birds: "Aves",
             Plants: "Plantae",
             Mushrooms: "Fungi",
             Insects: "Insecta"
         };
-        setNatureOption(natureObj[e.target.id])
-        setHeaderText(e.target.id)
+        // setNatureOption(natureObj[e.target.id])
+        // setHeaderText(e.target.id)
+        setNatureOption(iNat)
+        setHeaderText(name)
+        // setHeaderText(e.target.id)
     }
 
     // when user changes locations
@@ -111,6 +126,42 @@ function App() {
     //     ;
     // }
 
+
+
+    // const natureObj = {
+    //     Birds: { iNat: "Aves", display: "🐦 Birds" },
+    //     Plants: { iNat: "Plantae", display: "🌱 Plants" },
+    //     Mushrooms: { iNat: "Fungi", display: "🍄 Mushrooms" },
+    //     Insects: { iNat: "Insecta", display: "🐜 Insects" }
+    // };
+
+    // const nature = [
+    //     { name: "Birds", iNat: "Aves", btn: "🐦 Birds" },
+    //     { name: "Plants", iNat: "Plantae", btn: "🌱 Plants" },
+    //     { name: "Birds", iNat: "Fungi", btn: "🍄 Mushrooms" },
+    //     { name: "Insects", iNat: "Insecta", btn: "🐜 Insects" }
+    // ];
+
+
+    // creates buttons for nature filters
+    let buttons =
+        (<span className="natureOptions">
+            {nature.map(({ name, iNat, btn }, i) => (
+                <li className={`natureOption ${active === iNat && "active"}`} key={iNat}>
+                    <span
+                        onClick={(e) => {
+                            console.log('e: ', e, ' i: ', i, ' inat: ', iNat)
+                            natureFilter(i, name, iNat)
+                            // natureFilter(e)
+                            changeStyle(iNat)
+                        }}>
+                        {btn}
+                    </span>
+                </li>
+            ))}
+        </span>)
+
+
     return (
         <div className="container">
             <div className='finderContainer'>
@@ -119,16 +170,10 @@ function App() {
                     <span className='titleOption'>{headerText}</span>
                 </h1>
                 <div className='infoText'>Find out what plants, mushrooms, and birds have been spotted near you by the <a href="https://www.inaturalist.org/">iNaturalist</a> community this week!</div>
-
-                <div className='natureOptions'>
-                    <li className='natureOption' onClick={(e) => natureFilter(e)} id='Birds'>🐦 Birds </li>
-                    <li className='natureOption' onClick={(e) => natureFilter(e)} id='Plants' >🌱 Plants</li>
-                    <li className='natureOption' onClick={(e) => natureFilter(e)} id='Mushrooms' > 🍄 Mushrooms </li>
-                    <li className='natureOption' onClick={(e) => natureFilter(e)} id='Insects' > 🐜 Insects </li>
-                </div>
+                {/* nature buttons */}
+                {buttons}
                 <div className='finder'>
                     <div id='locationBox'>
-                        {/* <label htmlFor='location'> Location:</label> */}
                         <input type='text' id='location' name='loc' placeholder="Your Location" onChange={e => handleLocationChange(e)} value={locationInput} />
                         <ErrorMessage error={error} />
                         {showLocations ? <LocationResults results={locationList} locationInput={locationInput} locationText={locationText} handleClick={handleLocationClick} /> : null}

@@ -2,15 +2,18 @@ import React, { Component } from "react";
 import ResultFavorite from "./ResultFavorite";
 
 
-function Result({ handleClick, common, name, url, count }) {
+function Result({ speciesID, handleClick, common, name, url, count }) {
 
   return (
     <div
       className='result'
-      onClick={handleClick}
+    // onClick={handleClick}
     >
-      <h2>{common}</h2>
-      <h3>{name}</h3>
+      <div className='resultLink'> <a href={`https://www.inaturalist.org/taxa/${speciesID}`} target="_blank">
+        <h2>{common}</h2>
+        <h3>{name}</h3>
+      </a>
+      </div>
       <img src={url}></img>
       <h4>Seen {count} this week </h4>
     </div>

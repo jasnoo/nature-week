@@ -43,17 +43,19 @@
     list-style-type: none;
     background-color: darkOrange;
 
-    .unselected {
-      background-color: darkOrange;
-    }
-    .selected {
-      background-color: $red;
-    }
+    
+    // // .selected {
+    //   background-color: $red;
+    // }
   }
 
   li:hover {
     background-color: $red;
   }
+
+  .active {
+      background-color: $red;
+    }
 }
 
 #locationBox {

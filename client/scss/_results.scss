@@ -29,14 +29,29 @@
     }
  
     h2{
-        color:green;
+        color:green;  
     }
+    // h2:hover {
+    //     color: rgb(5, 158, 5);
+    // }
  
     h3{
         color:bisque;
     }
+    // h3:hover{
+    //     color:rgb(255, 238, 217);
+    // }
 
     h4 {color:bisque;}
+}
+
+.resultLink :hover {
+    h2 {
+        color: rgb(6, 137, 6);
+    }
+    h3{
+        color:rgb(255, 238, 217);
+    }
 }
 
 .seenSince { 
