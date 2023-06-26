@@ -8,7 +8,7 @@ finderController.getNatureData = (req, res, next) => {
     const weekAgoStr = `${weekAgo.getFullYear()}-${weekAgo.getMonth()}-${weekAgo.getDate()}`
     const displayDate = `${weekAgo.toLocaleString('default', { month: 'short' })} ${weekAgo.getDate()}, ${weekAgo.getFullYear()}`
     let option;
-    req.params.nature_option === "all" ? option = `iconic_taxa%5B%5D=Fungi&iconic_taxa%5B%5D=Plantae&iconic_taxa%5B%5D=Aves` : option = `iconic_taxa%5B%5D=${req.params.nature_option}`
+    req.params.nature_option === "all" ? option = `iconic_taxa%5B%5D=Fungi&iconic_taxa%5B%5D=Plantae&iconic_taxa%5B%5D=Aves&iconic_taxa%5B%5D=Insecta` : option = `iconic_taxa%5B%5D=${req.params.nature_option}`
 
 
     fetch(`https://api.inaturalist.org/v1/observations/species_counts?verifiable=true&spam=false&quality_grade=research&d1=${weekAgoStr}&locale=en-US&per_page=25&place_id=${req.params.location_id}&${option}`)

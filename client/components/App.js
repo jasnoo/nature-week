@@ -64,7 +64,8 @@ function App() {
         const natureObj = {
             Birds: "Aves",
             Plants: "Plantae",
-            Mushrooms: "Fungi"
+            Mushrooms: "Fungi",
+            Insects: "Insecta"
         };
         setNatureOption(natureObj[e.target.id])
         setHeaderText(e.target.id)
@@ -119,11 +120,12 @@ function App() {
                 </h1>
                 <div className='infoText'>Find out what plants, mushrooms, and birds have been spotted near you by the <a href="https://www.inaturalist.org/">iNaturalist</a> community this week!</div>
 
-                <ul className='natureOptions'>
+                <div className='natureOptions'>
                     <li className='natureOption' onClick={(e) => natureFilter(e)} id='Birds'>🐦 Birds </li>
                     <li className='natureOption' onClick={(e) => natureFilter(e)} id='Plants' >🌱 Plants</li>
                     <li className='natureOption' onClick={(e) => natureFilter(e)} id='Mushrooms' > 🍄 Mushrooms </li>
-                </ul>
+                    <li className='natureOption' onClick={(e) => natureFilter(e)} id='Insects' > 🐜 Insects </li>
+                </div>
                 <div className='finder'>
                     <div id='locationBox'>
                         {/* <label htmlFor='location'> Location:</label> */}

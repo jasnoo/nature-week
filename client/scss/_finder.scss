@@ -34,14 +34,10 @@
   justify-content: center;
   text-align: center;
     
-  .natureOptions ul {
-      margin-left: none;
-      list-style-position: inside;
-    }
 
   li {
-    margin: 10px;
-    padding: 10px 20px;
+    margin: 8px;
+    padding: 8px;
     border-radius: 10px;
     border: 2px solid $darkOrange;
     list-style-type: none;
