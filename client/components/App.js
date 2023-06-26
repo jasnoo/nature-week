@@ -150,9 +150,7 @@ function App() {
                 <li className={`natureOption ${active === iNat && "active"}`} key={iNat}>
                     <span
                         onClick={(e) => {
-                            console.log('e: ', e, ' i: ', i, ' inat: ', iNat)
                             natureFilter(i, name, iNat)
-                            // natureFilter(e)
                             changeStyle(iNat)
                         }}>
                         {btn}
