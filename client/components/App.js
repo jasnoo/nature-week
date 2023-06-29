@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ResultsContainer from "./ResultsContainer.js";
 import LocationResults from "./LocationResults.js";
 import ErrorMessage from "./ErrorMessage.js";
+import Login from "./Login.js";
 import Footer from "./Footer.js";
 
 
@@ -102,6 +103,7 @@ function App() {
     }
 
 
+
     // temporarily removing favorite functionality 
 
     // function handleFavoriteClick(e) {
@@ -186,7 +188,13 @@ function App() {
                 />
 
             </div>
+
+
+
+            <Login />
             <Footer />
+
+
         </div>
 
     )

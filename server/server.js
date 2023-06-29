@@ -29,6 +29,8 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors())
 
+
+
 app.use("/find/:location_id/:nature_option",
   finderController.getNatureData,
   (req, res) => {
@@ -43,6 +45,10 @@ app.post("/favorites", favoriteController.checkFav, (req, res) => {
 app.get("/favorites/:id", favoriteController.checkIfFavorite, (req, res) => {
   // res.send(res.locals.isFavorite);
   res.status(200).send(res.locals.isFavorite)
+});
+
+app.get("/signup", (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, "../client/signup.html"));
 });
 
 // statically serve everything in the build folder on the route '/build'

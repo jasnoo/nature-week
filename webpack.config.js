@@ -2,6 +2,13 @@ const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+    resolve: {
+        fallback: {
+            path: false,
+            crypto: false,
+            os: false,
+        },
+    },
     mode: process.env.NODE_ENV || 'production',
     entry: './client/index.js',
     output: {
@@ -41,6 +48,7 @@ module.exports = {
         compress: true,
         port: 8080,
         proxy: {
+            '/': 'http://localhost:3000',
             '/find': 'http://localhost:3000',
             '/signup': 'http://localhost:3000',
             '/login': 'http://localhost:3000',
