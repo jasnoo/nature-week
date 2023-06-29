@@ -6,7 +6,6 @@ import Login from "./Login.js";
 import Footer from "./Footer.js";
 
 
-
 function App() {
     const [locationInput, setLocationInput] = useState('')
     const [location, setLocation] = useState({})

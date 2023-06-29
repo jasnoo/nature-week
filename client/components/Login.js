@@ -9,11 +9,19 @@ function Login() {
     };
 
     return (
-        <div>
-            <h2>React Google Login</h2>
-            <br />
-            <br />
-            <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+        <div className='googleLogin'>
+            <GoogleLogin
+
+                onSuccess={credentialResponse => {
+                    console.log(credentialResponse);
+                }}
+
+                onError={() => {
+                    console.log('Login Failed');
+                }}
+            // useOneTap
+
+            />
         </div>
     )
 }
