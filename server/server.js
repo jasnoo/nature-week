@@ -12,7 +12,6 @@ const cors = require("cors");
 require('dotenv').config();
 
 
-
 const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded());
@@ -20,9 +19,18 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors())
 
+
+console.log('process.env.NODE_ENV ', process.env.NODE_ENV)
+
+
+const mongoURI = process.env.NODE_ENV === 'development' ? process.env.MONGO_LOCAL : process.env.MONGO_URI;
+
+console.log(mongoURI)
 try {
   mongoose
-    .connect(process.env.MONGO_URI, {
+    .connect('mongodb://localhost/natureweek', {
+      // .connect(process.env.MONGO_URI, {
+
       useNewUrlParser: true,
       useUnifiedTopology: true
     })

@@ -11,16 +11,13 @@ function Login() {
     return (
         <div className='googleLogin'>
             <GoogleLogin
-
                 onSuccess={credentialResponse => {
                     console.log(credentialResponse);
                 }}
-
                 onError={() => {
                     console.log('Login Failed');
                 }}
-            // useOneTap
-
+                useOneTap
             />
         </div>
     )
