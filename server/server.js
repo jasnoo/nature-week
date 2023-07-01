@@ -26,32 +26,19 @@ app.use(express.urlencoded());
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors())
+app.use(bodyParser.urlencoded({ extended: false }))
 
 
 
-// Redis
-// const RedisStore = connectRedis(session)
-// const redisClient = redis.createClient({
-//   host: 'localhost',
-//   port: 6379
-// })
 
-// redisClient.on('error', function (err) {
-//   console.log('Could not establish a connection with redis. ' + err);
-// });
-// redisClient.on('connect', function (err) {
-//   console.log('Connected to redis successfully');
-// });
-
-
-// Initialize client.
+// Initialize Redis client.
 let redisClient = redis.createClient()
 redisClient.connect().catch(console.error)
 
-// Initialize store.
+// Initialize redis store.
 let redisStore = new RedisStore({
   client: redisClient,
-  prefix: "twin:",
+  prefix: "session:",
 })
 app.use(
   session({
@@ -75,7 +62,6 @@ try {
   mongoose
     .connect('mongodb://localhost/natureweek', {
       // .connect(process.env.MONGO_URI, {
-
       useNewUrlParser: true,
       useUnifiedTopology: true
     })
@@ -88,11 +74,11 @@ try {
 
 app.get("/", (req, res) => {
   const sess = req.session;
-  console.log(sess.user)
   if (sess.user) {
-    console.log('theres a username')
-    res.status(200).send('no username')
-    res.end('<a href=' + '/logout' + '>Click here to log out</a >')
+    console.log(sess.user)
+    res.status(200).send(sess.user)
+
+    // res.end('<a href=' + '/logout' + '>Click here to log out</a >')
   } else {
     console.log('no username')
     res.status(200).send('no username')
@@ -111,10 +97,10 @@ app.use("/login",
     const sess = req.session;
     const user = res.locals.credentials.email
     sess.user = user
-    res.end("success")
+    // res.end("success")
 
 
-    // res.status(200).send(res.locals.credentials)
+    res.status(200).send(JSON.stringify(res.locals.credentials))
 
 
     // res.json({ 1: true })
@@ -151,3 +137,18 @@ app.get("/", (req, res) => {
 });
 
 app.listen(3000);
+
+
+    // sess looks like this 
+    //     {
+    //     "sess": {
+    //         "cookie": {
+    //             "originalMaxAge": 120000,
+    //             "expires": "2023-07-01T17:03:58.631Z",
+    //             "secure": false,
+    //             "httpOnly": false,
+    //             "path": "/"
+    //         },
+    //         "user": "jasminee@gmail.com"
+    //     }
+    // }
