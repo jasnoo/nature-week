@@ -7,6 +7,7 @@ const finderController = require("../server/controllers/finderController.js");
 const favoriteController = require("../server/controllers/favoriteController.js");
 const userController = require("../server/controllers/userController.js");
 const cookieController = require("../server/controllers/cookieController.js");
+const authController = require("../server/controllers/authController.js");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require('dotenv').config();
@@ -21,8 +22,6 @@ app.use(cors())
 
 
 console.log('process.env.NODE_ENV ', process.env.NODE_ENV)
-
-
 const mongoURI = process.env.NODE_ENV === 'development' ? process.env.MONGO_LOCAL : process.env.MONGO_URI;
 
 console.log(mongoURI)
@@ -45,6 +44,13 @@ app.use("/find/:location_id/:nature_option",
     res.status(200).send({ results: res.locals.results, date: res.locals.date });
   }
 );
+
+app.use("/login",
+  authController.verifyCredentials,
+  (req, res) => {
+    res.status(200).send(res.locals.credentials)
+    // res.json({ 1: true })
+  })
 
 app.post("/favorites", favoriteController.checkFav, (req, res) => {
   res.status(200);

@@ -1,7 +1,20 @@
-const { useSyncExternalStore } = require("react");
-const { User } = require("../models/natureWeekModels");
-const bcrypt = require("bcryptjs");
+// const { useSyncExternalStore } = require("react");
+const { User } = require("../models/user");
+
+// validate user token
+// desired controllers
+// check if a user exists
+// start a session
+// create a user
+// end a session
+
+// login with google will give me name and username
+// check if user exists -> 
+
+
 const userController = {};
+
+
 
 userController.createUser = (req, res, next) => {
   // i expect username password to come through on req, body
