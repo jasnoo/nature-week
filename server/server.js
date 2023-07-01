@@ -90,6 +90,7 @@ app.get("/", (req, res) => {
 
 app.use("/login",
   authController.verifyCredentials,
+  userController.createUser,
   (req, res) => {
 
     console.log('req.body here: ', req.body)
