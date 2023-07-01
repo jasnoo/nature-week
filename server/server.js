@@ -1,5 +1,4 @@
 const express = require("express");
-const app = express();
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const path = require("path");
@@ -10,10 +9,18 @@ const cookieController = require("../server/controllers/cookieController.js");
 const authController = require("../server/controllers/authController.js");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const axios = require('axios');
 require('dotenv').config();
+// const session = require('express-session');
+// const redis = require('redis');
+// const connectRedis = require('connect-redis');
+const RedisStore = require("connect-redis").default
+const session = require('express-session');
+const redis = require('redis');
 
 
 const port = process.env.PORT || 3000;
+const app = express();
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(bodyParser.json());
@@ -21,9 +28,48 @@ app.use(cookieParser());
 app.use(cors())
 
 
-console.log('process.env.NODE_ENV ', process.env.NODE_ENV)
-const mongoURI = process.env.NODE_ENV === 'development' ? process.env.MONGO_LOCAL : process.env.MONGO_URI;
 
+// Redis
+// const RedisStore = connectRedis(session)
+// const redisClient = redis.createClient({
+//   host: 'localhost',
+//   port: 6379
+// })
+
+// redisClient.on('error', function (err) {
+//   console.log('Could not establish a connection with redis. ' + err);
+// });
+// redisClient.on('connect', function (err) {
+//   console.log('Connected to redis successfully');
+// });
+
+
+// Initialize client.
+let redisClient = redis.createClient()
+redisClient.connect().catch(console.error)
+
+// Initialize store.
+let redisStore = new RedisStore({
+  client: redisClient,
+  prefix: "twin:",
+})
+app.use(
+  session({
+    store: redisStore,
+    resave: false, // required: force lightweight session keep alive (touch)
+    saveUninitialized: false, // recommended: only save session when data exists
+    secret: process.env.SESS_SECRET,
+    cookie: {
+      secure: false, // if true only transmit cookie over https
+      httpOnly: false, // if true prevent client side JS from reading the cookie 
+      maxAge: 1000 * 60 * 2 // session max age in miliseconds
+    }
+  })
+)
+
+
+// mongo
+const mongoURI = process.env.NODE_ENV === 'development' ? process.env.MONGO_LOCAL : process.env.MONGO_URI;
 console.log(mongoURI)
 try {
   mongoose
@@ -38,6 +84,43 @@ try {
   (err) => console.log(error);
 }
 
+
+
+app.get("/", (req, res) => {
+  const sess = req.session;
+  console.log(sess.user)
+  if (sess.user) {
+    console.log('theres a username')
+    res.status(200).send('no username')
+    res.end('<a href=' + '/logout' + '>Click here to log out</a >')
+  } else {
+    console.log('no username')
+    res.status(200).send('no username')
+
+    // res.end('<a href=' + '/logout' + '>Click here to log in</a >')
+
+  }
+});
+
+app.use("/login",
+  authController.verifyCredentials,
+  (req, res) => {
+
+    console.log('req.body here: ', req.body)
+
+    const sess = req.session;
+    const user = res.locals.credentials.email
+    sess.user = user
+    res.end("success")
+
+
+    // res.status(200).send(res.locals.credentials)
+
+
+    // res.json({ 1: true })
+  })
+
+
 app.use("/find/:location_id/:nature_option",
   finderController.getNatureData,
   (req, res) => {
@@ -45,12 +128,7 @@ app.use("/find/:location_id/:nature_option",
   }
 );
 
-app.use("/login",
-  authController.verifyCredentials,
-  (req, res) => {
-    res.status(200).send(res.locals.credentials)
-    // res.json({ 1: true })
-  })
+
 
 app.post("/favorites", favoriteController.checkFav, (req, res) => {
   res.status(200);
