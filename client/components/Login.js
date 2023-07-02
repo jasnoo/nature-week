@@ -1,11 +1,11 @@
 import React from "react"
 import { GoogleLogin } from '@react-oauth/google';
-function Login() {
+function Login({ user, setUser, setFavorites }) {
 
     // for Google Login
     const responseMessage = (response) => {
-        console.log('response:', { credential: response.credential });
         const credJson = JSON.stringify({ credential: response.credential })
+        console.log(credJson)
         fetch('/login', {
             method: "post",
             mode: "cors",
@@ -16,7 +16,13 @@ function Login() {
             },
         })
             .then((response) => response.json())
-            .then(data => console.log('data:', data))
+            // .then(data => console.log('data:', data))
+            .then(data => {
+                setFavorites(data.favorites)
+                setUser(data.user)
+            })
+
+
 
     };
     const errorMessage = (error) => {

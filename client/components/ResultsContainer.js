@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import Result from "./Result.js";
 
-function ResultsContainer({ speciesList, sinceDate, natureOption, handleClick }) {
+function ResultsContainer({ speciesList, sinceDate, natureOption, handleFavorite, speciesID, favorites }) {
   let resultArr
+
+
   if (speciesList !== null) {
-    resultArr = speciesList.map(x => {
+    resultArr = speciesList.map((x, i) => {
       return (
         <Result
-          handleClick={handleClick}
+          handleFavorite={handleFavorite}
           key={`result-${x.id}`}
           count={x.count}
           name={x.name}
@@ -15,6 +17,8 @@ function ResultsContainer({ speciesList, sinceDate, natureOption, handleClick })
           speciesID={x.id}
           common={x.preferred_common_name}
           nature_option={natureOption}
+          favorite={(favorites.includes(speciesID)) ? true : false}
+
         />
       );
     })

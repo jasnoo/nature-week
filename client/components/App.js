@@ -5,7 +5,6 @@ import ErrorMessage from "./ErrorMessage.js";
 import Login from "./Login.js";
 import Footer from "./Footer.js";
 
-
 function App() {
     const [locationInput, setLocationInput] = useState('')
     const [location, setLocation] = useState({})
@@ -20,6 +19,8 @@ function App() {
     const [showResults, setShowResults] = useState(false)
     const [error, setError] = useState(null)
     const [active, setActive] = useState('');
+    const [user, setUser] = useState(null)
+    const [favorites, setFavorites] = useState([])
 
     // used to change what button is actively selected
     const changeStyle = (iNatVal) => setActive(iNatVal)
@@ -49,7 +50,11 @@ function App() {
                 })
                 .catch((error) => console.error(error));
         }
-        getINaturalist(locationInput)
+
+        if (locationInput !== '') {
+            getINaturalist(locationInput)
+        }
+
 
     }, [locationInput])
 
@@ -98,8 +103,36 @@ function App() {
         setLocationText(e.target.innerText)
         setLocationId(e.target.id)
         setShowLocations(false)
-
     }
+
+    function handleFavorite(e) {
+        console.log('handlefav user', user)
+        let favObj = {
+            'user': user,
+            '_id': e.target.getAttribute("speciesId"),
+        }
+        console.log('favObj', favObj)
+        // console.log(e.target.getAttribute("speciesId"))
+        fetch("/favorites", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(favObj),
+        })
+            .then((response) => response.json())
+            // .then((data) => {
+            // })
+
+            ;
+    }
+
+    // check if clicked item is currently in favorite
+
+    // if in fav
+    // change array to not have favorites
+    // if not in fav
+    // change array to be have favorites
+
+    // update new array in db
 
 
 
@@ -182,15 +215,16 @@ function App() {
                     natureOption={headerText}
                     sinceDate={sinceDate}
                     speciesList={speciesList}
-                // temporarily removing favorite functionality 
-                // handleClick={handleFavoriteClick}
+                    favorites={favorites}
+                    // temporarily removing favorite functionality 
+                    handleFavorite={handleFavorite}
                 />
 
             </div>
 
 
 
-            <Login />
+            <Login user={user} setUser={setUser} setFavorites={setFavorites} />
             <Footer />
 
 
