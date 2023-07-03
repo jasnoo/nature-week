@@ -2,6 +2,7 @@ const sessionController = {};
 
 
 sessionController.verifyUser = (req, res, next) => {
+
     // write code here
 
     // pulling out the username and password from the user inputted sign in field

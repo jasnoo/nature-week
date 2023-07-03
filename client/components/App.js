@@ -5,7 +5,6 @@ import ErrorMessage from "./ErrorMessage.js";
 import Login from "./Login.js";
 import Footer from "./Footer.js";
 
-
 function App() {
     const [locationInput, setLocationInput] = useState('')
     const [location, setLocation] = useState({})
@@ -20,6 +19,8 @@ function App() {
     const [showResults, setShowResults] = useState(false)
     const [error, setError] = useState(null)
     const [active, setActive] = useState('');
+    const [user, setUser] = useState(null)
+    const [favorites, setFavorites] = useState([])
 
     // used to change what button is actively selected
     const changeStyle = (iNatVal) => setActive(iNatVal)
@@ -49,7 +50,11 @@ function App() {
                 })
                 .catch((error) => console.error(error));
         }
-        getINaturalist(locationInput)
+
+        if (locationInput !== '') {
+            getINaturalist(locationInput)
+        }
+
 
     }, [locationInput])
 
@@ -98,8 +103,37 @@ function App() {
         setLocationText(e.target.innerText)
         setLocationId(e.target.id)
         setShowLocations(false)
-
     }
+
+    // when a user adds/removes favorites
+    function handleFavorite(e, isFavorite) {
+        let favObj = {
+            _id: e.target.getAttribute("speciesId"),
+            'user': user,
+            'isFavorite': isFavorite,
+        }
+        const modify = (isFavorite ? "remove" : "add")
+        console.log('favObj', favObj)
+        fetch(`/favorites/${modify}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(favObj),
+        })
+            .then((response) => response.json())
+            .then(data => {
+                console.log('data that will prob be new stuff: ', data)
+                setFavorites(data)
+            })
+    }
+
+    // check if clicked item is currently in favorite
+
+    // if in fav
+    // change array to not have favorites
+    // if not in fav
+    // change array to be have favorites
+
+    // update new array in db
 
 
 
@@ -182,15 +216,15 @@ function App() {
                     natureOption={headerText}
                     sinceDate={sinceDate}
                     speciesList={speciesList}
-                // temporarily removing favorite functionality 
-                // handleClick={handleFavoriteClick}
+                    favorites={favorites}
+                    handleFavorite={handleFavorite}
                 />
 
             </div>
 
 
 
-            <Login />
+            <Login user={user} setUser={setUser} setFavorites={setFavorites} />
             <Footer />
 
 

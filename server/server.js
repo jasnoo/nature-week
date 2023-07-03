@@ -29,10 +29,12 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 
-
-
 // Initialize Redis client.
-let redisClient = redis.createClient()
+// const redisClient = redis.createClient({
+//   host: 'localhost',
+//   port: 6379
+// })
+const redisClient = redis.createClient()
 redisClient.connect().catch(console.error)
 
 // Initialize redis store.
@@ -49,7 +51,7 @@ app.use(
     cookie: {
       secure: false, // if true only transmit cookie over https
       httpOnly: false, // if true prevent client side JS from reading the cookie 
-      maxAge: 1000 * 60 * 2 // session max age in miliseconds
+      maxAge: 1000 * 60 * 10 // session max age in miliseconds - currently 10 min
     }
   })
 )
@@ -73,9 +75,11 @@ try {
 
 
 app.get("/", (req, res) => {
+  console.log('entering main get request')
+
   const sess = req.session;
   if (sess.user) {
-    console.log(sess.user)
+    console.log('username found')
     res.status(200).send(sess.user)
 
     // res.end('<a href=' + '/logout' + '>Click here to log out</a >')
@@ -93,15 +97,23 @@ app.use("/login",
   userController.createUser,
   (req, res) => {
 
-    console.log('req.body here: ', req.body)
+    console.log('entering end of /login')
 
     const sess = req.session;
     const user = res.locals.credentials.email
     sess.user = user
     // res.end("success")
 
+    const returnObj = {
+      favorites: res.locals.favorites,
+      user: res.locals.credentials.email,
+      credentials: res.locals.credentials
+    }
 
-    res.status(200).send(JSON.stringify(res.locals.credentials))
+
+
+
+    res.status(200).send(JSON.stringify(returnObj))
 
 
     // res.json({ 1: true })
@@ -117,13 +129,19 @@ app.use("/find/:location_id/:nature_option",
 
 
 
-app.post("/favorites", favoriteController.checkFav, (req, res) => {
-  res.status(200);
+
+// app.get("/favorites/:id", favoriteController.checkIfFavorite, (req, res) => {
+//   // res.send(res.locals.isFavorite);
+//   res.status(200).send(res.locals.isFavorite)
+// });
+
+app.post("/favorites/add", favoriteController.addFavorite, (req, res) => {
+  console.log('res.locals in add', res.locals)
+  res.status(200).json(res.locals.userFavorites);
 });
 
-app.get("/favorites/:id", favoriteController.checkIfFavorite, (req, res) => {
-  // res.send(res.locals.isFavorite);
-  res.status(200).send(res.locals.isFavorite)
+app.post("/favorites/remove", favoriteController.removeFavorite, (req, res) => {
+  res.status(200).json(res.locals.userFavorites);
 });
 
 app.get("/signup", (req, res) => {

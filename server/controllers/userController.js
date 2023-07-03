@@ -27,6 +27,7 @@ userController.createUser = (req, res, next) => {
                 if (data) {
                     console.log("user exists, user data: ", data);
 
+
                 } else {
                     User.create({
                         email: email,
@@ -35,11 +36,14 @@ userController.createUser = (req, res, next) => {
                     }).then((data) => {
                         console.log("THIS IS THE USER: ", data);
                         // res.locals.userId = data["_id"];
-                        // console.log("fin userController.createUser");
 
-                        next();
+
                     });
                 }
+                res.locals.user = data.email
+                res.locals.favorites = data.favorites
+                console.log("leaving userController.createUser");
+                next();
             });
     } catch (err) {
         next(err);
