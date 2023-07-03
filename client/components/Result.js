@@ -1,25 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ResultFavorite from "./ResultFavorite";
 
 
-function Result({ speciesID, handleFavorite, common, name, url, count, favorite }) {
+function Result({ speciesID, handleFavorite, common, name, url, count, isFavorite }) {
   const favColor = 'red'
   const regColor = 'grey'
-  let startColor = (favorite ? favColor : regColor)
+  let startColor = (isFavorite ? favColor : regColor)
   const [color, setColor] = useState(startColor);
 
   const toggleColor = (e) => {
     setColor((prevColor) => {
       return prevColor === regColor ? favColor : regColor;
     });
-    handleFavorite(e)
   };
 
   return (
 
     <div
       className='result'>
-      <span onClick={e => toggleColor(e)} className={`fav-heart`} speciesID={speciesID} style={{ color }} > ♥</span>
+      <span onClick={e => {
+        toggleColor(e);
+        handleFavorite(e, isFavorite);
+      }} className={`fav-heart`} speciesID={speciesID} style={{ color }} > ♥</span>
       <div className='resultLink'> <a href={`https://www.inaturalist.org/taxa/${speciesID}`} target="_blank">
         <h2>{common}</h2>
         <h3>{name}</h3>

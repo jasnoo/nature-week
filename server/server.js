@@ -99,7 +99,6 @@ app.use("/login",
 
     console.log('entering end of /login')
 
-    console.log('reslocals: ', res.locals)
     const sess = req.session;
     const user = res.locals.credentials.email
     sess.user = user
@@ -131,15 +130,19 @@ app.use("/find/:location_id/:nature_option",
 
 
 
-app.get("/favorites/:id", favoriteController.checkIfFavorite, (req, res) => {
-  // res.send(res.locals.isFavorite);
-  res.status(200).send(res.locals.isFavorite)
+// app.get("/favorites/:id", favoriteController.checkIfFavorite, (req, res) => {
+//   // res.send(res.locals.isFavorite);
+//   res.status(200).send(res.locals.isFavorite)
+// });
+
+app.post("/favorites/add", favoriteController.addFavorite, (req, res) => {
+  console.log('res.locals in add', res.locals)
+  res.status(200).json(res.locals.userFavorites);
 });
 
-app.post("/favorites", favoriteController.modifyFavorites, (req, res) => {
-  res.status(200);
+app.post("/favorites/remove", favoriteController.removeFavorite, (req, res) => {
+  res.status(200).json(res.locals.userFavorites);
 });
-
 
 app.get("/signup", (req, res) => {
   res.status(200).sendFile(path.join(__dirname, "../client/signup.html"));

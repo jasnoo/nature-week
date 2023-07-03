@@ -105,24 +105,25 @@ function App() {
         setShowLocations(false)
     }
 
-    function handleFavorite(e) {
-        console.log('handlefav user', user)
+    // when a user adds/removes favorites
+    function handleFavorite(e, isFavorite) {
         let favObj = {
+            _id: e.target.getAttribute("speciesId"),
             'user': user,
-            '_id': e.target.getAttribute("speciesId"),
+            'isFavorite': isFavorite,
         }
+        const modify = (isFavorite ? "remove" : "add")
         console.log('favObj', favObj)
-        // console.log(e.target.getAttribute("speciesId"))
-        fetch("/favorites", {
+        fetch(`/favorites/${modify}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(favObj),
         })
             .then((response) => response.json())
-            // .then((data) => {
-            // })
-
-            ;
+            .then(data => {
+                console.log('data that will prob be new stuff: ', data)
+                setFavorites(data)
+            })
     }
 
     // check if clicked item is currently in favorite
@@ -216,7 +217,6 @@ function App() {
                     sinceDate={sinceDate}
                     speciesList={speciesList}
                     favorites={favorites}
-                    // temporarily removing favorite functionality 
                     handleFavorite={handleFavorite}
                 />
 

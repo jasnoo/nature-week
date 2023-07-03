@@ -29,7 +29,7 @@ authController.verifyCredentials = (req, res, next) => {
     const result = verify(process.env.GOOGLE_OAUTH_CLIENT_ID, req.body.credential)
     result
         .then((data) => {
-            console.log('verify promise result:', data)
+            // console.log('verify promise result:', data)
             res.locals.credentials = data
             next();
         })

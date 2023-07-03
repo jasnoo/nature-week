@@ -5,7 +5,6 @@ function Login({ user, setUser, setFavorites }) {
     // for Google Login
     const responseMessage = (response) => {
         const credJson = JSON.stringify({ credential: response.credential })
-        console.log(credJson)
         fetch('/login', {
             method: "post",
             mode: "cors",
