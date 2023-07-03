@@ -6,6 +6,7 @@ const finderController = require("../server/controllers/finderController.js");
 const favoriteController = require("../server/controllers/favoriteController.js");
 const userController = require("../server/controllers/userController.js");
 const cookieController = require("../server/controllers/cookieController.js");
+const sessionController = require("../server/controllers/sessionController.js");
 const authController = require("../server/controllers/authController.js");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -51,7 +52,7 @@ app.use(
     cookie: {
       secure: false, // if true only transmit cookie over https
       httpOnly: false, // if true prevent client side JS from reading the cookie 
-      maxAge: 1000 * 60 * 10 // session max age in miliseconds - currently 10 min
+      maxAge: 1000 * 60 * 2 // session max age in miliseconds - currently 10 min
     }
   })
 )
@@ -92,26 +93,33 @@ app.get("/", (req, res) => {
   }
 });
 
+app.use("/session", sessionController.getSession, userController.getUserFavorites, (req, res) => {
+  const sess = req.session;
+  if (sess.user) {
+    res.status(200).send({ user: sess.user, favorites: res.locals.favorites, name: res.locals.name })
+  } else {
+    res.status(200).send({ user: null, })
+  }
+});
+
+
 app.use("/login",
   authController.verifyCredentials,
-  userController.createUser,
+  userController.getUser,
   (req, res) => {
 
     console.log('entering end of /login')
-
     const sess = req.session;
     const user = res.locals.credentials.email
-    sess.user = user
+    sess.user = res.locals.credentials.email
+    sess.name = res.locals.credentials.given_name
     // res.end("success")
 
     const returnObj = {
       favorites: res.locals.favorites,
       user: res.locals.credentials.email,
-      credentials: res.locals.credentials
+      name: res.locals.credentials.given_name
     }
-
-
-
 
     res.status(200).send(JSON.stringify(returnObj))
 

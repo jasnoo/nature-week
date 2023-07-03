@@ -20,6 +20,7 @@ function App() {
     const [error, setError] = useState(null)
     const [active, setActive] = useState('');
     const [user, setUser] = useState(null)
+    const [name, setName] = useState(null)
     const [favorites, setFavorites] = useState([])
 
     // used to change what button is actively selected
@@ -224,7 +225,7 @@ function App() {
 
 
 
-            <Login user={user} setUser={setUser} setFavorites={setFavorites} />
+            <Login user={user} setUser={setUser} setName={setName} name={name} setFavorites={setFavorites} />
             <Footer />
 
 
