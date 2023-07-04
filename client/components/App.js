@@ -40,7 +40,6 @@ function App() {
             fetch(
                 "https://api.inaturalist.org/v1/places/autocomplete?" +
                 new URLSearchParams({ q: id })
-
             )
                 .then((response) => response.json())
                 .then((data) => {
@@ -55,14 +54,11 @@ function App() {
         if (locationInput !== '') {
             getINaturalist(locationInput)
         }
-
-
     }, [locationInput])
 
 
     // when user has chosen a location
     useEffect(() => {
-
         if (natureOption && locationId) {
             setShowResults(true)
             fetch(`/find/${locationId}/${natureOption}`)
@@ -75,6 +71,30 @@ function App() {
         }
 
     }, [locationId, natureOption])
+
+
+    // when user chooses favorites
+
+    function getFavorites() {
+        if (user && (favorites[0] !== undefined)) {
+            // need to add functionality to support 31+ favorites since API only returns 30 max
+            const favString = favorites.join("%2C")
+            console.log(favString)
+
+
+        }
+        if (natureOption && locationId) {
+            setShowResults(true)
+            fetch(`/find/${locationId}/${natureOption}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    setSpeciesList(data.results)
+                    setSinceDate(`${data.date} - today`)
+                })
+                .catch((e) => console.log('error', e));
+        }
+
+    }
 
 
     //specifically whne one of the 3 buttons are clicked
@@ -125,16 +145,12 @@ function App() {
                 .then(data => {
                     setFavorites(data)
                 })
-
-
-
-
         }
         else { console.log('not logged in!') }
     }
 
     // creates buttons for nature filters
-    let buttons =
+    const natureButtons =
         (<span className="natureOptions">
             {nature.map(({ name, iNat, btn }, i) => (
                 <li className={`natureOption ${active === iNat && "active"}`} key={iNat}>
@@ -149,6 +165,17 @@ function App() {
             ))}
         </span>)
 
+    const favButton = (
+        <span className="natureOptions">
+            <li className={`natureOption ${active === 'favorite' && "active"}`} key='favorite'>
+                <span
+                    onClick={() => getFavorites()}>
+                    Your Favorites
+                </span>
+            </li>
+        </span>
+    )
+
 
     return (
         <div className="container">
@@ -161,7 +188,7 @@ function App() {
 
                 <div className='infoText'>Find out what has been spotted near you by the <a href="https://www.inaturalist.org/">iNaturalist</a> community this week!</div>
                 {/* nature buttons */}
-                {buttons}
+                {natureButtons}{favButton}
                 <div className='finder'>
                     <div id='locationBox'>
                         <input type='text' id='location' name='loc' placeholder="Your Location" onChange={e => handleLocationChange(e)} value={locationInput} />
