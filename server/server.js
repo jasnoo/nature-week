@@ -5,19 +5,14 @@ const path = require("path");
 const finderController = require("../server/controllers/finderController.js");
 const favoriteController = require("../server/controllers/favoriteController.js");
 const userController = require("../server/controllers/userController.js");
-const cookieController = require("../server/controllers/cookieController.js");
 const sessionController = require("../server/controllers/sessionController.js");
 const authController = require("../server/controllers/authController.js");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const axios = require('axios');
-require('dotenv').config();
-// const session = require('express-session');
-// const redis = require('redis');
-// const connectRedis = require('connect-redis');
 const RedisStore = require("connect-redis").default
 const session = require('express-session');
 const redis = require('redis');
+require('dotenv').config();
 
 
 const port = process.env.PORT || 3000;
@@ -30,11 +25,6 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 
-// Initialize Redis client.
-// const redisClient = redis.createClient({
-//   host: 'localhost',
-//   port: 6379
-// })
 const redisClient = redis.createClient()
 redisClient.connect().catch(console.error)
 
@@ -52,7 +42,7 @@ app.use(
     cookie: {
       secure: false, // if true only transmit cookie over https
       httpOnly: false, // if true prevent client side JS from reading the cookie 
-      maxAge: 1000 * 60 * 2 // session max age in miliseconds - currently 10 min
+      maxAge: 1000 * 60 * 2 // session max age in miliseconds -
     }
   })
 )
@@ -74,25 +64,6 @@ try {
 }
 
 
-
-app.get("/", (req, res) => {
-  console.log('entering main get request')
-
-  const sess = req.session;
-  if (sess.user) {
-    console.log('username found')
-    res.status(200).send(sess.user)
-
-    // res.end('<a href=' + '/logout' + '>Click here to log out</a >')
-  } else {
-    console.log('no username')
-    res.status(200).send('no username')
-
-    // res.end('<a href=' + '/logout' + '>Click here to log in</a >')
-
-  }
-});
-
 app.use("/session", sessionController.getSession, userController.getUserFavorites, (req, res) => {
   const sess = req.session;
   if (sess.user) {
@@ -103,29 +74,21 @@ app.use("/session", sessionController.getSession, userController.getUserFavorite
 });
 
 
-app.use("/login",
-  authController.verifyCredentials,
-  userController.getUser,
-  (req, res) => {
+app.use("/login", authController.verifyCredentials, userController.getUser, (req, res) => {
+  const sess = req.session;
+  const user = res.locals.credentials.email
+  sess.user = res.locals.credentials.email
+  sess.name = res.locals.credentials.given_name
+  sess.token = res.locals.token
 
-    console.log('entering end of /login')
-    const sess = req.session;
-    const user = res.locals.credentials.email
-    sess.user = res.locals.credentials.email
-    sess.name = res.locals.credentials.given_name
-    // res.end("success")
+  const returnObj = {
+    favorites: res.locals.favorites,
+    user: res.locals.credentials.email,
+    name: res.locals.credentials.given_name
+  }
 
-    const returnObj = {
-      favorites: res.locals.favorites,
-      user: res.locals.credentials.email,
-      name: res.locals.credentials.given_name
-    }
-
-    res.status(200).send(JSON.stringify(returnObj))
-
-
-    // res.json({ 1: true })
-  })
+  res.status(200).send(JSON.stringify(returnObj))
+})
 
 
 app.use("/find/:location_id/:nature_option",
@@ -135,30 +98,29 @@ app.use("/find/:location_id/:nature_option",
   }
 );
 
-
-
-
-// app.get("/favorites/:id", favoriteController.checkIfFavorite, (req, res) => {
-//   // res.send(res.locals.isFavorite);
-//   res.status(200).send(res.locals.isFavorite)
-// });
-
-app.post("/favorites/add", favoriteController.addFavorite, (req, res) => {
+app.post("/favorites/add", sessionController.getSession, favoriteController.addFavorite, (req, res) => {
   console.log('res.locals in add', res.locals)
-  res.status(200).json(res.locals.userFavorites);
+  if (res.locals.user) {
+    res.status(200).json(res.locals.userFavorites);
+  }
+  else res.status(200).json([]);
+
 });
 
-app.post("/favorites/remove", favoriteController.removeFavorite, (req, res) => {
-  res.status(200).json(res.locals.userFavorites);
+app.post("/favorites/remove", sessionController.getSession, favoriteController.removeFavorite, (req, res) => {
+  if (res.locals.user) {
+    res.status(200).json(res.locals.userFavorites);
+  }
+  else res.status(200).json([]);
+
 });
 
 app.get("/signup", (req, res) => {
   res.status(200).sendFile(path.join(__dirname, "../client/signup.html"));
 });
 
-// statically serve everything in the build folder on the route '/build'
 app.use("/build", express.static(path.join(__dirname, "../build")));
-// serve index.html on the route '/'
+
 app.get("/", (req, res) => {
   res.status(200).sendFile(path.join(__dirname, "../index.html"));
 });
@@ -166,7 +128,28 @@ app.get("/", (req, res) => {
 app.listen(3000);
 
 
-    // sess looks like this 
+
+
+
+// app.get("/", (req, res) => {
+//   console.log('entering main get request')
+
+//   const sess = req.session;
+//   if (sess.user) {
+//     console.log('username found')
+//     res.status(200).send(sess.user)
+
+//   } else {
+//     console.log('no username')
+//     res.status(200).send('no username')
+
+//     // res.end('<a href=' + '/logout' + '>Click here to log in</a >')
+
+//   }
+// });
+
+
+    // sess looks like this
     //     {
     //     "sess": {
     //         "cookie": {

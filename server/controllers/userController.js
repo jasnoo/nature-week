@@ -1,10 +1,9 @@
 
-
-// const { useSyncExternalStore } = require("react");
 const { User } = require("../models/user");
 
 const userController = {};
 
+// getting a user/creating a new one 
 userController.getUser = async (req, res, next) => {
     const { email, given_name } = res.locals.credentials;
     try {
