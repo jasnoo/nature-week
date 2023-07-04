@@ -32,6 +32,9 @@
  
     h2{
         color:green;  
+        margin: 5px auto;
+        width: 300px;
+
     }
     // h2:hover {
     //     color: rgb(5, 158, 5);
@@ -49,7 +52,8 @@
 
 .resultLink :hover {
     h2 {
-        color: rgb(6, 137, 6);
+        color: rgb(18, 93, 18);
+        
     }
     h3{
         color:rgb(255, 238, 217);
@@ -78,7 +82,7 @@
 }
 
 .fav-inactive {
-    color:grey}
+    color:bisque}
 
 // .resultFavorite:hover {
 //     color: darkgreen; 

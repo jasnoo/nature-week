@@ -3,11 +3,12 @@ import Result from "./Result.js";
 
 function ResultsContainer({ speciesList, sinceDate, natureOption, handleFavorite, speciesID, favorites }) {
   let resultArr
-  // console.log('favorites in results container: ', favorites)
-
+  console.log('favorites in results container: ', favorites)
 
   if (speciesList !== null) {
     resultArr = speciesList.map((x, i) => {
+      console.log('favorites:', favorites, ' Number(x.id)): ', Number(x.id))
+
       let isFavorite = favorites.includes(Number(x.id))
       console.log('isFavorite in results list', isFavorite)
       return (

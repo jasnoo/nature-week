@@ -20,6 +20,7 @@ function App() {
     const [error, setError] = useState(null)
     const [active, setActive] = useState('');
     const [user, setUser] = useState(null)
+    const [name, setName] = useState(null)
     const [favorites, setFavorites] = useState([])
 
     // used to change what button is actively selected
@@ -107,76 +108,30 @@ function App() {
 
     // when a user adds/removes favorites
     function handleFavorite(e, isFavorite) {
-        let favObj = {
-            _id: e.target.getAttribute("speciesId"),
-            'user': user,
-            'isFavorite': isFavorite,
-        }
-        const modify = (isFavorite ? "remove" : "add")
-        console.log('favObj', favObj)
-        fetch(`/favorites/${modify}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(favObj),
-        })
-            .then((response) => response.json())
-            .then(data => {
-                console.log('data that will prob be new stuff: ', data)
-                setFavorites(data)
+        console.log('user?:', user, ".. is favorite?:", isFavorite)
+        if (user) {
+            let favObj = {
+                _id: e.target.getAttribute("speciesId"),
+                'user': user,
+                'isFavorite': isFavorite,
+            }
+            const modify = (isFavorite ? "remove" : "add")
+            fetch(`/favorites/${modify}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(favObj),
             })
+                .then((response) => response.json())
+                .then(data => {
+                    setFavorites(data)
+                })
+
+
+
+
+        }
+        else { console.log('not logged in!') }
     }
-
-    // check if clicked item is currently in favorite
-
-    // if in fav
-    // change array to not have favorites
-    // if not in fav
-    // change array to be have favorites
-
-    // update new array in db
-
-
-
-    // temporarily removing favorite functionality 
-
-    // function handleFavoriteClick(e) {
-    //   let favObj = {
-    //     _id: e.target.getAttribute("speciesId"),
-    //     name: e.target.getAttribute("name"),
-    //     common_name: e.target.getAttribute("common"),
-    //     type: e.target.getAttribute("nature_option"),
-    //     photo_url: e.target.getAttribute("url"),
-    //   };
-    //   fetch("/favorites", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(favObj),
-    //   })
-    //     .then((response) => response.json())
-    //     // .then((data) => {
-    //     // })
-
-    //     ;
-    // }
-
-
-
-    // const natureObj = {
-    //     Birds: { iNat: "Aves", display: "🐦 Birds" },
-    //     Plants: { iNat: "Plantae", display: "🌱 Plants" },
-    //     Mushrooms: { iNat: "Fungi", display: "🍄 Mushrooms" },
-    //     Insects: { iNat: "Insecta", display: "🐜 Insects" }
-    // };
-
-    // const nature = [
-    //     { name: "Birds", iNat: "Aves", btn: "🐦 Birds" },
-    //     { name: "Plants", iNat: "Plantae", btn: "🌱 Plants" },
-    //     { name: "Birds", iNat: "Fungi", btn: "🍄 Mushrooms" },
-    //     { name: "Insects", iNat: "Insecta", btn: "🐜 Insects" }
-    // ];
-
 
     // creates buttons for nature filters
     let buttons =
@@ -213,6 +168,7 @@ function App() {
                     </div>
                 </div>
                 <ResultsContainer
+                    loggedIn={!!user}
                     natureOption={headerText}
                     sinceDate={sinceDate}
                     speciesList={speciesList}
@@ -224,7 +180,7 @@ function App() {
 
 
 
-            <Login user={user} setUser={setUser} setFavorites={setFavorites} />
+            <Login user={user} setUser={setUser} setName={setName} name={name} setFavorites={setFavorites} />
             <Footer />
 
 

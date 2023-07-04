@@ -6,91 +6,45 @@ const favoriteController = {};
 
 favoriteController.addFavorite = async (req, res, next) => {
   console.log('entering fav controller add')
-  let user = req.body.user
-  let speciesId = req.body._id
+  if (res.locals.user) {
+    let speciesId = req.body._id
+    try {
 
-  console.log('user:', user, '... species:id:', speciesId, '.. req.body:', req.body)
-
-  // try {
-  //   return await Movie.findOneAndUpdate({ _id: movie._id }, movie, { upsert: true, new: true }, (err, result) => {
-  //     return result;
-  //   });
-  // }
-
-
-
-  try {
-
-    await User.findOneAndUpdate(
-      { 'email': user },
-      {
-        $addToSet: {
-          favorites: speciesId
-        }
-      },
-      { new: true, useFindAndModify: false }
-
-      // (err, result) => {
-      //   return result
-
-      // if (err) return res.json({ success: false, err });
-      // res.status(200).json(productInfo)
-      // }
-
-    )
-      .then(data => {
-        console.log('data from db:', data)
-        res.locals.userFavorites = data.favorites
-      })
+      await User.findOneAndUpdate({ 'email': res.locals.user }, { $addToSet: { favorites: speciesId } }, { new: true, useFindAndModify: false })
+        .then(data => {
+          res.locals.userFavorites = data.favorites
+        })
+      next();
+    } catch (err) {
+      next(err);
+    }
+  }
+  else {
     next();
-  } catch (err) {
-    next(err);
   }
 
 };
 
 
-// favoriteController.addFavorite = async (req, res, next) => {
-//   console.log('entering fav controller remove')
-
-//   let user = req.body.user
-//   let speciesId = req.body._id
-//   console.log('user:', user, '... species:id:', speciesId)
-
-//   try {
-//     return await User.findOneAndUpdate({ "email": user },
-//       { $addToSet: { favorites: speciesId } },
-//     ).exec()
-//       .then(data => {
-//         res.locals.userFavorites = data.favorites
-//         next()
-//       }
-
-//       )
-
-//   } catch (err) {
-//     next(err);
-//   }
-
-// };
-
-
 favoriteController.removeFavorite = async (req, res, next) => {
   console.log('entering fav controller remove')
 
-  let user = req.body.user
-  let speciesId = req.body._id
+  if (res.locals.user) {
+    let user = req.body.user
+    let speciesId = req.body._id
 
-  try {
-    return await User.findOneAndUpdate({ "email": user },
-      { $pull: { favorites: { $in: speciesId } } },
-      { new: true }
-    ).exec()
-      .then(data => { res.locals.userFavorites = data.favorites })
-    next();
-  } catch (err) {
-    next(err);
+    console.log('in remove fav controller : speciesId:', speciesId, 'user:', user)
+
+    try {
+      await User.findOneAndUpdate({ "email": user }, { $pull: { favorites: { $in: speciesId } } }, { new: true }).exec()
+        .then(data => { res.locals.userFavorites = data.favorites })
+      next();
+    } catch (err) {
+      next(err);
+    }
   }
+  next();
+
 
 };
 

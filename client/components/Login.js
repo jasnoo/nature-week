@@ -1,6 +1,21 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { GoogleLogin } from '@react-oauth/google';
-function Login({ user, setUser, setFavorites }) {
+function Login({ name, user, setUser, setName, setFavorites }) {
+
+
+    useEffect(() => {
+        fetch('/session')
+            .then(response => response.json())
+            .then(data => {
+                console.log('data from sessions resp:', data)
+                if (data.user) {
+                    setUser(data.user)
+                    setFavorites(data.favorites)
+                    setName(data.name)
+                }
+            })
+
+    }, [])
 
     // for Google Login
     const responseMessage = (response) => {
@@ -17,8 +32,10 @@ function Login({ user, setUser, setFavorites }) {
             .then((response) => response.json())
             // .then(data => console.log('data:', data))
             .then(data => {
+                console.log('data from google resp:', data)
                 setFavorites(data.favorites)
                 setUser(data.user)
+                setName(data.name)
             })
 
 
@@ -28,21 +45,25 @@ function Login({ user, setUser, setFavorites }) {
         console.log(error);
     };
 
+    if (name) {
+        return <div>Welcome back {name}</div>
+    } else {
 
+        return (
+            <div className='googleLogin'>
+                <GoogleLogin
+                    onSuccess={credentialResponse => {
+                        return responseMessage(credentialResponse);
+                    }}
+                    onError={(e) => {
+                        errorMessage(e)
+                    }}
+                    useOneTap
+                />
+            </div>
+        )
+    }
 
-    return (
-        <div className='googleLogin'>
-            <GoogleLogin
-                onSuccess={credentialResponse => {
-                    return responseMessage(credentialResponse);
-                }}
-                onError={(e) => {
-                    errorMessage(e)
-                }}
-                useOneTap
-            />
-        </div>
-    )
 }
 
 export default Login
