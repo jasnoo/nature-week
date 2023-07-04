@@ -78,22 +78,17 @@ function App() {
     function getFavorites() {
         if (user && (favorites[0] !== undefined)) {
             // need to add functionality to support 31+ favorites since API only returns 30 max
-            const favString = favorites.join("%2C")
-            console.log(favString)
-
-
-        }
-        if (natureOption && locationId) {
-            setShowResults(true)
-            fetch(`/find/${locationId}/${natureOption}`)
+            fetch(`/favorites/all`)
                 .then((response) => response.json())
                 .then((data) => {
-                    setSpeciesList(data.results)
-                    setSinceDate(`${data.date} - today`)
+                    console.log(data)
                 })
                 .catch((e) => console.log('error', e));
+
+
         }
 
+        else { console.log('not logged in / no favorites') }
     }
 
 

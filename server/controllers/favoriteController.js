@@ -9,7 +9,6 @@ favoriteController.addFavorite = async (req, res, next) => {
   if (res.locals.user) {
     let speciesId = req.body._id
     try {
-
       await User.findOneAndUpdate({ 'email': res.locals.user }, { $addToSet: { favorites: speciesId } }, { new: true, useFindAndModify: false })
         .then(data => {
           res.locals.userFavorites = data.favorites
@@ -22,7 +21,6 @@ favoriteController.addFavorite = async (req, res, next) => {
   else {
     next();
   }
-
 };
 
 
@@ -44,10 +42,62 @@ favoriteController.removeFavorite = async (req, res, next) => {
     }
   }
   next();
-
-
 };
 
+favoriteController.getAllFavorites = (req, res, next) => {
+  console.log('entering get all Fav')
+  console.log(res.locals.user)
+  if (res.locals.user) {
+    try {
+      User.findOne({ 'email': res.locals.user }).select('favorites').exec()
+        .then(data => {
+          res.locals.favorites = data
+          console.log('got data')
+          next();
+        })
+    } catch (err) {
+      next(err);
+    }
+  }
+  else {
+    next();
+  }
+}
+
+favoriteController.getFavoriteData = (req, res, next) => {
+
+  if (res.locals.favorites.favorites[0] !== undefined) {
+    const favString = res.locals.favorites.favorites.join("%2C")
+    console.log('fav string', favString)
+    try {
+      fetch(`https://api.inaturalist.org/v1/taxa/${favString}`)
+        .then((response) => response.json())
+        .then((data) => {
+          // console.log('data from inaturalist about fav: ', data)
+          let favoritesInfo = data.results.map(x => {
+            return {
+              id: x.id,
+              preferred_common_name: x.preferred_common_name,
+              name: x.name,
+              medium_url: x.default_photo.medium_url,
+              nature_option: x.iconic_taxon_name
+            }
+
+          })
+          res.locals.favorites = favoritesInfo
+
+          next();
+        })
+        .catch((e) => console.log('error', e));
+
+    } catch (err) {
+      next(err);
+    }
+  }
+  else {
+    next();
+  }
+}
 
 
 // favoriteController.removeFavorite = async (req, res, next) => {

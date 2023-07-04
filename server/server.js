@@ -98,6 +98,8 @@ app.use("/find/:location_id/:nature_option",
   }
 );
 
+
+
 app.post("/favorites/add", sessionController.getSession, favoriteController.addFavorite, (req, res) => {
   console.log('res.locals in add', res.locals)
   if (res.locals.user) {
@@ -114,6 +116,15 @@ app.post("/favorites/remove", sessionController.getSession, favoriteController.r
   else res.status(200).json([]);
 
 });
+
+app.use("/favorites/all",
+  sessionController.getSession,
+  favoriteController.getAllFavorites,
+  favoriteController.getFavoriteData,
+  (req, res) => {
+    res.status(200).send(res.locals.favorites);
+  }
+);
 
 app.get("/signup", (req, res) => {
   res.status(200).sendFile(path.join(__dirname, "../client/signup.html"));
