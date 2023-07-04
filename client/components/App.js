@@ -63,7 +63,7 @@ function App() {
 
     // when user has chosen a location
     useEffect(() => {
-        if (natureOption && locationId) {
+        if (natureOption && locationId && natureOption !== 'Favorites') {
             setShowFavorites(false)
             setShowResults(true)
             fetch(`/find/${locationId}/${natureOption}`)
@@ -175,6 +175,7 @@ function App() {
                         return <li className={`natureOption ${active === iNat && "active"}`} key='favorite'>
                             <span
                                 onClick={() => {
+                                    setSpeciesList(null)
                                     setShowFavorites(true)
                                     setLocationText('')
                                     natureFilter(i, name, iNat)
@@ -193,7 +194,7 @@ function App() {
 
     return (
         <div className="container">
-            <Login user={user} setUser={setUser} setName={setName} name={name} setFavorites={setFavorites} />
+            <Login key={`login${!!user}`} user={user} setUser={setUser} setName={setName} name={name} setFavorites={setFavorites} />
             <div className='finderContainer'>
                 <h1 className='newHeader'>
                     This Week in{" "}
@@ -207,11 +208,12 @@ function App() {
                     <div id='locationBox'>
                         <input type='text' id='location' name='loc' placeholder="Your Location" onChange={e => handleLocationChange(e)} value={locationInput} />
                         <ErrorMessage error={error} />
-                        {showLocations ? <LocationResults results={locationList} locationInput={locationInput} locationText={locationText} handleClick={handleLocationClick} /> : null}
+                        {showLocations ? <LocationResults key='locRes' results={locationList} locationInput={locationInput} locationText={locationText} handleClick={handleLocationClick} /> : null}
                     </div>
                 </div>
                 <ResultsContainer
-                    loggedIn={!!user}
+                    key={`results-${natureOption}`}
+                    auth={!!user}
                     natureOption={headerText}
                     sinceDate={sinceDate}
                     speciesList={speciesList}
@@ -220,10 +222,7 @@ function App() {
                     showFavorites={showFavorites}
                 />
             </div>
-
-
-
-            <Footer />
+            <Footer key='footer' />
 
 
         </div>

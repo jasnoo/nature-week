@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Result from "./Result.js";
 import ResultFavorite from "./ResultFavorite.js";
 
-function ResultsContainer({ speciesList, sinceDate, natureOption, handleFavorite, speciesID, favorites, showFavorites }) {
+function ResultsContainer({ speciesList, sinceDate, natureOption, handleFavorite, speciesID, favorites, showFavorites, auth }) {
 
   if (showFavorites) {
 
@@ -15,7 +15,7 @@ function ResultsContainer({ speciesList, sinceDate, natureOption, handleFavorite
         return (
           <ResultFavorite
             handleFavorite={handleFavorite}
-            key={`result-${x.id}`}
+            key={`favresult-${x.id}-${i}`}
             name={x.name}
             url={x.medium_url}
             speciesID={x.id}
@@ -38,12 +38,10 @@ function ResultsContainer({ speciesList, sinceDate, natureOption, handleFavorite
       )
     } else return (
       <div>
-        <h1 className='seenSince'>Your Favorites</h1>
+        <h1 className='seenSince'>Your Favorite Species:</h1>
         <div className='resultsContainer'>{resultArr || ''}</div>
       </div>
     )
-
-
   }
 
   else {
@@ -56,9 +54,9 @@ function ResultsContainer({ speciesList, sinceDate, natureOption, handleFavorite
         let isFavorite = favorites.includes(Number(x.id))
         console.log('isFavorite in results list', isFavorite)
         return (
-          <Result
+          <Result auth={auth}
             handleFavorite={handleFavorite}
-            key={`result-${x.id}`}
+            key={`result-${x.id}-${i}`}
             count={x.count}
             name={x.name}
             url={x.medium_url}
