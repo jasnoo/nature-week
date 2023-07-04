@@ -5,6 +5,7 @@ import ErrorMessage from "./ErrorMessage.js";
 import Login from "./Login.js";
 import Footer from "./Footer.js";
 
+
 function App() {
     const [locationInput, setLocationInput] = useState('')
     const [location, setLocation] = useState({})
@@ -22,6 +23,7 @@ function App() {
     const [user, setUser] = useState(null)
     const [name, setName] = useState(null)
     const [favorites, setFavorites] = useState([])
+    const [showFavorites, setShowFavorites] = useState(false)
 
     // used to change what button is actively selected
     const changeStyle = (iNatVal) => setActive(iNatVal)
@@ -31,7 +33,9 @@ function App() {
         { name: "Birds", iNat: "Aves", btn: "🐦 Birds" },
         { name: "Plants", iNat: "Plantae", btn: "🌱 Plants" },
         { name: "Mushrooms", iNat: "Fungi", btn: "🍄 Mushrooms" },
-        { name: "Insects", iNat: "Insecta", btn: "🐜 Insects" }
+        { name: "Insects", iNat: "Insecta", btn: "🐜 Insects" },
+        { name: "Favorites", iNat: "Favorites", btn: "❤️ Your Favorites" }
+
     ];
 
     // when user types location
@@ -60,6 +64,7 @@ function App() {
     // when user has chosen a location
     useEffect(() => {
         if (natureOption && locationId) {
+            setShowFavorites(false)
             setShowResults(true)
             fetch(`/find/${locationId}/${natureOption}`)
                 .then((response) => response.json())
@@ -76,35 +81,35 @@ function App() {
     // when user chooses favorites
 
     function getFavorites() {
+        setHeaderText('Nature')
         if (user && (favorites[0] !== undefined)) {
+            setShowFavorites(true)
             // need to add functionality to support 31+ favorites since API only returns 30 max
             fetch(`/favorites/all`)
                 .then((response) => response.json())
                 .then((data) => {
                     console.log(data)
+                    setSpeciesList(data)
                 })
                 .catch((e) => console.log('error', e));
-
-
         }
-
         else { console.log('not logged in / no favorites') }
     }
 
 
-    //specifically whne one of the 3 buttons are clicked
+    //specifically whne one of the  buttons are clicked
     function natureFilter(i, name, iNat) {
         const natureObj = {
             Birds: "Aves",
             Plants: "Plantae",
             Mushrooms: "Fungi",
-            Insects: "Insecta"
+            Insects: "Insecta",
+            Favorites: "Favorites"
         };
-        // setNatureOption(natureObj[e.target.id])
-        // setHeaderText(e.target.id)
         setNatureOption(iNat)
         setHeaderText(name)
-        // setHeaderText(e.target.id)
+
+
     }
 
     // when user changes locations
@@ -138,6 +143,7 @@ function App() {
             })
                 .then((response) => response.json())
                 .then(data => {
+                    console.log('data:', data)
                     setFavorites(data)
                 })
         }
@@ -147,29 +153,42 @@ function App() {
     // creates buttons for nature filters
     const natureButtons =
         (<span className="natureOptions">
-            {nature.map(({ name, iNat, btn }, i) => (
-                <li className={`natureOption ${active === iNat && "active"}`} key={iNat}>
-                    <span
-                        onClick={(e) => {
-                            natureFilter(i, name, iNat)
-                            changeStyle(iNat)
-                        }}>
-                        {btn}
-                    </span>
-                </li>
-            ))}
+            {nature.map(({ name, iNat, btn }, i) => {
+                if (iNat !== 'Favorites') {
+                    return (
+                        <li className={`natureOption ${active === iNat && "active"}`} key={iNat}>
+                            <span
+                                onClick={(e) => {
+                                    setSpeciesList(null)
+                                    if (showFavorites === true) setShowFavorites(false)
+                                    natureFilter(i, name, iNat)
+                                    changeStyle(iNat)
+                                    // setShowFavorites(false)
+                                }}>
+                                {btn}
+                            </span>
+                        </li>
+                    )
+                }
+                else {
+                    if (user) {
+                        return <li className={`natureOption ${active === iNat && "active"}`} key='favorite'>
+                            <span
+                                onClick={() => {
+                                    setShowFavorites(true)
+                                    setLocationText('')
+                                    natureFilter(i, name, iNat)
+                                    changeStyle(iNat)
+                                    getFavorites()
+                                }}>
+                                ❤️ Your Favorites
+                            </span>
+                        </li>
+                    }
+                    return
+                }
+            })}
         </span>)
-
-    const favButton = (
-        <span className="natureOptions">
-            <li className={`natureOption ${active === 'favorite' && "active"}`} key='favorite'>
-                <span
-                    onClick={() => getFavorites()}>
-                    Your Favorites
-                </span>
-            </li>
-        </span>
-    )
 
 
     return (
@@ -183,7 +202,7 @@ function App() {
 
                 <div className='infoText'>Find out what has been spotted near you by the <a href="https://www.inaturalist.org/">iNaturalist</a> community this week!</div>
                 {/* nature buttons */}
-                {natureButtons}{favButton}
+                {natureButtons}
                 <div className='finder'>
                     <div id='locationBox'>
                         <input type='text' id='location' name='loc' placeholder="Your Location" onChange={e => handleLocationChange(e)} value={locationInput} />
@@ -198,8 +217,8 @@ function App() {
                     speciesList={speciesList}
                     favorites={favorites}
                     handleFavorite={handleFavorite}
+                    showFavorites={showFavorites}
                 />
-
             </div>
 
 

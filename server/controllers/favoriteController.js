@@ -1,6 +1,7 @@
 
 const path = require("path");
 const { User } = require("../models/user");
+const { isFloat32Array } = require("util/types");
 
 const favoriteController = {};
 
@@ -80,7 +81,7 @@ favoriteController.getFavoriteData = (req, res, next) => {
               preferred_common_name: x.preferred_common_name,
               name: x.name,
               medium_url: x.default_photo.medium_url,
-              nature_option: x.iconic_taxon_name
+              nature_option: x.iconic_taxon_name,
             }
 
           })

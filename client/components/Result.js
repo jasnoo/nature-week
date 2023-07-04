@@ -14,14 +14,12 @@ function Result({ speciesID, handleFavorite, common, name, url, count, isFavorit
     });
   };
 
-
-
   return (
 
     <div
       className='result'>
       <span onClick={e => {
-        // toggleColor(e);
+        toggleColor(e);
         handleFavorite(e, isFavorite);
       }} className={`fav-heart ${isFavorite ? 'fav-active' : 'fav-inactive'}`} speciesID={speciesID}  > ♥</span>
       <div className='resultLink'> <a href={`https://www.inaturalist.org/taxa/${speciesID}`} target="_blank">
