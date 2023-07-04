@@ -152,11 +152,13 @@ function App() {
 
     return (
         <div className="container">
+            <Login user={user} setUser={setUser} setName={setName} name={name} setFavorites={setFavorites} />
             <div className='finderContainer'>
                 <h1 className='newHeader'>
                     This Week in{" "}
                     <span className='titleOption'>{headerText}</span>
                 </h1>
+
                 <div className='infoText'>Find out what has been spotted near you by the <a href="https://www.inaturalist.org/">iNaturalist</a> community this week!</div>
                 {/* nature buttons */}
                 {buttons}
@@ -180,7 +182,6 @@ function App() {
 
 
 
-            <Login user={user} setUser={setUser} setName={setName} name={name} setFavorites={setFavorites} />
             <Footer />
 
 

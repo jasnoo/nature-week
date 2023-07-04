@@ -1,0 +1,32 @@
+.login, .welcomeBack {
+    display: inherit;
+    margin: 20px;
+    right: 0px;
+    top: 0px;
+    position: absolute;
+    // @media (max-width: 360px) {
+      
+    // }
+}
+
+.loginText { 
+    margin: 2px 5px 0 0;
+}
+
+
+.infoText {
+  margin: 20px auto ;
+  max-width: 600px;
+  padding: 0 10px;
+  font-size:18px;
+  text-align: center;
+}
+
+.newHeader {
+  padding: 70px 10px 0;
+  font-family: "Suez One", serif;
+  color: $cream;
+  text-align: center;
+  font-size: 55px;
+  line-height: 1.2em;
+}

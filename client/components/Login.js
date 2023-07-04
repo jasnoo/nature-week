@@ -3,6 +3,7 @@ import { GoogleLogin } from '@react-oauth/google';
 function Login({ name, user, setUser, setName, setFavorites }) {
 
 
+
     useEffect(() => {
         fetch('/session')
             .then(response => response.json())
@@ -46,20 +47,27 @@ function Login({ name, user, setUser, setName, setFavorites }) {
     };
 
     if (name) {
-        return <div>Welcome back {name}</div>
+        return <div className="welcomeBack">Welcome back {name}</div>
     } else {
 
         return (
-            <div className='googleLogin'>
-                <GoogleLogin
-                    onSuccess={credentialResponse => {
-                        return responseMessage(credentialResponse);
-                    }}
-                    onError={(e) => {
-                        errorMessage(e)
-                    }}
-                    useOneTap
-                />
+            <div className='login'>
+                <span className="loginText">Log in With </span>
+                <div className='googleLogin'>
+                    <GoogleLogin
+                        onSuccess={credentialResponse => {
+                            return responseMessage(credentialResponse);
+                        }}
+                        onError={(e) => {
+                            errorMessage(e)
+                        }}
+                        type='icon'
+                        shape='square'
+                        size="small"
+                    // type="rectangular"
+                    // width='100'
+                    />
+                </div>
             </div>
         )
     }
