@@ -24,8 +24,14 @@ app.use(cookieParser());
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-
-const redisClient = redis.createClient()
+const redisClient = redis.createClient({
+  username: 'default',
+  password: process.env.REDIS_PW,
+  socket: {
+    host: process.env.REDIS_HOST,
+    port: 13266
+  }
+})
 redisClient.connect().catch(console.error)
 
 // Initialize redis store.
