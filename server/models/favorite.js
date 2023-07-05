@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-// add mongoose URI and connect
 
 const Schema = mongoose.Schema;
 

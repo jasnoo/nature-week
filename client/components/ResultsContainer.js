@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import Result from "./Result.js";
 import ResultFavorite from "./ResultFavorite.js";
 
+// todo: refactor
 function ResultsContainer({ speciesList, sinceDate, natureOption, handleFavorite, speciesID, favorites, showFavorites, auth }) {
 
   if (showFavorites) {
@@ -20,7 +21,6 @@ function ResultsContainer({ speciesList, sinceDate, natureOption, handleFavorite
             common={x.preferred_common_name}
             nature_option={natureOption}
             isFavorite={isFavorite}
-
           />
         );
       })
@@ -30,7 +30,6 @@ function ResultsContainer({ speciesList, sinceDate, natureOption, handleFavorite
           <div className='resultsContainer'>{resultArr || ''}</div>
         </div>
       )
-
     }
     else {
       return (
@@ -39,12 +38,9 @@ function ResultsContainer({ speciesList, sinceDate, natureOption, handleFavorite
         </div>
       )
     }
-
-
   }
 
   else {
-
     let resultArr
     if (speciesList !== null) {
       resultArr = speciesList.map((x, i) => {
@@ -61,7 +57,6 @@ function ResultsContainer({ speciesList, sinceDate, natureOption, handleFavorite
             common={x.preferred_common_name}
             nature_option={natureOption}
             isFavorite={isFavorite}
-
           />
         );
       })

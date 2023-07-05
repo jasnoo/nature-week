@@ -3,23 +3,12 @@ import ResultFavorite from "./ResultFavorite";
 
 
 function Result({ speciesID, handleFavorite, common, name, url, count, isFavorite, auth }) {
-  const favColor = 'red'
-  const regColor = 'grey'
-  let startColor = (isFavorite ? favColor : regColor)
-  const [color, setColor] = useState(startColor);
-
-  const toggleColor = (e) => {
-    setColor((prevColor) => {
-      return prevColor === regColor ? favColor : regColor;
-    });
-  };
 
   return (
 
     <div
       className='result'>
       {auth ? (<span onClick={e => {
-        // toggleColor(e);
         handleFavorite(e, isFavorite);
       }} className={`fav-heart ${isFavorite ? 'fav-active' : 'fav-inactive'}`} speciesid={speciesID}  > ♥</span>) : null}
 
