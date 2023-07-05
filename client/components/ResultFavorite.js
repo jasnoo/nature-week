@@ -1,36 +1,20 @@
-import React, { Component } from "react";
+import React from "react";
 
-// currently not in use 
-
-function ResultFavorite(props) {
-
-  let text = "";
-  let fav = "";
-  if (props.isFavorite) {
-    fav = "regStar";
-    text = `★ In Your Favorites `;
-  } else {
-    fav = "favStar";
-    text = `Add To Favorites`;
-  }
+function Result({ speciesID, handleFavorite, common, name, url, count, isFavorite }) {
 
   return (
     <div
-      // className='resultFavText'
-      url={props.url}
-      isFavorite={props.isFavorite}
-      nature_option={props.nature_option}
-      name={props.name}
-      common={props.common}
-      key={`fav-${props.speciesID}`}
-      speciesID={props.speciesID}
-      id={`fav-${props.speciesID}`}
-      className={`resultFavorite`}
-    >
-      {/* <span className={fav}>☆★</span> */}
-
-      {text}
-    </div>
-  )
+      className={`result ${isFavorite ? '' : 'fav-removed'}`}>
+      <span onClick={e => {
+        handleFavorite(e, isFavorite);
+      }} className={`fav-heart ${isFavorite ? 'fav-active' : 'fav-inactive'}`} speciesid={speciesID}  > ♥</span>
+      <div className='resultLink'> <a href={`https://www.inaturalist.org/taxa/${speciesID}`} target="_blank">
+        <h2>{common}</h2>
+        <h3>{name}</h3>
+      </a>
+      </div>
+      <img src={url}></img>
+    </div >
+  );
 }
-export default ResultFavorite;
+export default Result;

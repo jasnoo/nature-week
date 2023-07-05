@@ -1,7 +1,7 @@
 .container{
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   align-content:space-between;
 }
@@ -24,7 +24,6 @@
   }
 }
 
-
 .natureOptions {
   margin: auto;
   min-width: 300px;
@@ -33,13 +32,13 @@
   flex-wrap: wrap;
   justify-content: center;
   text-align: center;
-  font-size: 20px;
+  font-size: 16px;
     
 
   li {
     margin: 8px;
-    padding: 8px;
-    border-radius: 10px;
+    padding: 6px;
+    border-radius: 7px;
     border: 2px solid $darkOrange;
     list-style-type: none;
     background-color: darkOrange;
@@ -102,22 +101,7 @@
   text-align: center;
   margin: 40px 0 15px;
   font-size: 14px;
+  // bottom: 0px;
+  align-self: center;
 }
-.infoText {
-  margin: 20px auto ;
-  max-width: 600px;
-  padding: 0 10px;
-  font-size:18px;
-  text-align: center;
-}
-
-.newHeader {
-  padding: 25px 10px 0;
-  font-family: "Suez One", serif;
-  color: $cream;
-  text-align: center;
-  font-size: 55px;
-  line-height: 1.2em;
-}
-
 

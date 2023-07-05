@@ -1,6 +1,7 @@
 
 
 .resultsContainer { 
+    
     display:flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -18,6 +19,7 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    position:relative;
 
     width:400px;
 
@@ -30,6 +32,9 @@
  
     h2{
         color:green;  
+        margin: 5px auto;
+        width: 300px;
+
     }
     // h2:hover {
     //     color: rgb(5, 158, 5);
@@ -47,7 +52,8 @@
 
 .resultLink :hover {
     h2 {
-        color: rgb(6, 137, 6);
+        color: rgb(18, 93, 18);
+        
     }
     h3{
         color:rgb(255, 238, 217);
@@ -63,12 +69,22 @@
 }
 
 
-.resultFavorite {
-    color: green; 
-    margin-top:10px;
+.fav-heart {
+    position:absolute; 
+    top: 10px;
+    right: 15px;
+    
+    
 }
 
-.resultFavorite:hover {
-    color: darkgreen; 
-    margin-top:10px;
+.fav-active {
+    color:red
 }
+
+.fav-removed {
+    display:none}
+
+// .resultFavorite:hover {
+//     color: darkgreen; 
+//     margin-top:10px;
+// }
