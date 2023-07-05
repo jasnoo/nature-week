@@ -35,7 +35,6 @@ function App() {
         { name: "Mushrooms", iNat: "Fungi", btn: "🍄 Mushrooms" },
         { name: "Insects", iNat: "Insecta", btn: "🐜 Insects" },
         { name: "Favorites", iNat: "Favorites", btn: "❤️ Your Favorites" }
-
     ];
 
     // when user types location
@@ -74,30 +73,40 @@ function App() {
                 })
                 .catch((e) => console.log('error', e));
         }
-
     }, [locationId, natureOption])
-
 
     // when user chooses favorites
 
     function getFavorites() {
         setHeaderText('Nature')
-        if (user && (favorites[0] !== undefined)) {
-            setShowFavorites(true)
-            // need to add functionality to support 31+ favorites since API only returns 30 max
-            fetch(`/favorites/all`)
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log(data)
-                    setSpeciesList(data)
-                })
-                .catch((e) => console.log('error', e));
+        if (user) {
+            if (favorites[0] !== undefined) {
+                let favString = favorites.join("%2C")
+                console.log('fav string', favString)
+                fetch(`https://api.inaturalist.org/v1/taxa/${favString}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        // console.log('data from inaturalist about fav: ', data)
+                        let favoritesInfo = data.results.map(x => {
+                            return {
+                                id: x.id,
+                                preferred_common_name: x.preferred_common_name,
+                                name: x.name,
+                                medium_url: x.default_photo.medium_url,
+                                nature_option: x.iconic_taxon_name,
+                            }
+
+                        })
+                        setSpeciesList(favoritesInfo)
+                    })
+                    .catch((e) => console.log('error', e));
+            }
         }
-        else { console.log('not logged in / no favorites') }
+        else { setSpeciesList([]) }
     }
 
 
-    //specifically whne one of the  buttons are clicked
+    //specifically whne one of the buttons are clicked
     function natureFilter(i, name, iNat) {
         const natureObj = {
             Birds: "Aves",
@@ -212,7 +221,7 @@ function App() {
                     </div>
                 </div>
                 <ResultsContainer
-                    key={`results-${natureOption}`}
+                    key={`results-${natureOption}-${favorites.length}`}
                     auth={!!user}
                     natureOption={headerText}
                     sinceDate={sinceDate}

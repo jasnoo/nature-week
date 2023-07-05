@@ -16,13 +16,18 @@ userController.getUser = async (req, res, next) => {
                         first_name: given_name,
                         favorite: [],
                     }).then((data) => {
-                        res.locals.userId = data["_id"]
+                        res.locals.user = data.email
+                        res.locals.name = data.first_name
+                        res.locals.favorites = data.favorites
+                        next();
                     });
+                } else {
+                    res.locals.user = data.user
+                    res.locals.name = given_name
+                    res.locals.favorites = data.favorites
+                    next();
                 }
-                res.locals.user = data.email
-                res.locals.name = given_name
-                res.locals.favorites = data.favorites
-                next();
+
             });
     } catch (err) {
         next(err);

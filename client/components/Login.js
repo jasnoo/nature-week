@@ -47,12 +47,20 @@ function Login({ name, user, setUser, setName, setFavorites }) {
     };
 
     if (name) {
-        return <div className="welcomeBack">Welcome back {name}</div>
+        return (
+            <div className='loggedin'>
+                <span className="welcome">
+                    Welcome {name}</span>
+                <span className='logout'>
+                    <a href='/logout'>Logout</a>
+                </span>
+            </div>
+        )
     } else {
 
         return (
             <div className='login'>
-                <span className="loginText">Log in With </span>
+                <span className="loginText">Log in with </span>
                 <div className='googleLogin'>
                     <GoogleLogin
                         onSuccess={credentialResponse => {
@@ -64,8 +72,6 @@ function Login({ name, user, setUser, setName, setFavorites }) {
                         type='icon'
                         shape='square'
                         size="small"
-                    // type="rectangular"
-                    // width='100'
                     />
                 </div>
             </div>

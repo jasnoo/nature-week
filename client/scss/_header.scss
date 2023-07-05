@@ -1,4 +1,4 @@
-.login, .welcomeBack {
+.login, .loggedin {
     display: inherit;
     margin: 20px;
     right: 0px;
@@ -10,7 +10,11 @@
 }
 
 .loginText { 
-    margin: 2px 5px 0 0;
+    margin: 0px 5px 0 0;
+}
+
+.welcome {
+  margin-right: 20px;
 }
 
 

@@ -42,7 +42,7 @@ app.use(
     cookie: {
       secure: false, // if true only transmit cookie over https
       httpOnly: false, // if true prevent client side JS from reading the cookie 
-      maxAge: 1000 * 60 * 2 // session max age in miliseconds -
+      maxAge: 1000 * 60 * 60 // session max age in miliseconds -
     }
   })
 )
@@ -65,8 +65,9 @@ try {
 
 
 app.use("/session", sessionController.getSession, userController.getUserFavorites, (req, res) => {
+  console.log('end of session route')
   const sess = req.session;
-  if (sess.user) {
+  if (sess.user && res.locals.favorites) {
     res.status(200).send({ user: sess.user, favorites: res.locals.favorites, name: res.locals.name })
   } else {
     res.status(200).send({ user: null, })
@@ -89,6 +90,16 @@ app.use("/login", authController.verifyCredentials, userController.getUser, (req
 
   res.status(200).send(JSON.stringify(returnObj))
 })
+
+app.get("/logout", (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      return console.log(err);
+    }
+    res.redirect("/")
+  });
+});
+
 
 
 app.use("/find/:location_id/:nature_option",
@@ -120,7 +131,7 @@ app.post("/favorites/remove", sessionController.getSession, favoriteController.r
 app.use("/favorites/all",
   sessionController.getSession,
   favoriteController.getAllFavorites,
-  favoriteController.getFavoriteData,
+  // favoriteController.getFavoriteData,
   (req, res) => {
     res.status(200).send(res.locals.favorites);
   }
