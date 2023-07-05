@@ -4,11 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development node server/server.js && webpack-dev-server --mode development",
+    "start": "cross-env node server/server.js",
     "build": "cross-env NODE_ENV=production webpack --mode production",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --mode development --hot && nodemon -r dotenv/config server/server.js",
-    "dev2": "cross-env NODE_ENV=development nodemon -r dotenv/config server/server.js && webpack-dev-server --mode development --hot",
-    "front": "webpack-dev-server --mode development"
+    "dev": "cross-env NODE_ENV=development nodemon -r dotenv/config server/server.js && webpack-dev-server --mode development --hot",
+    // "front": "webpack-dev-server --mode development"
   },
   "nodemonConfig": {
     "ignore": [
