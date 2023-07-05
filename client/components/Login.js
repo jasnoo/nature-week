@@ -2,8 +2,6 @@ import React, { useEffect } from "react"
 import { GoogleLogin } from '@react-oauth/google';
 function Login({ name, user, setUser, setName, setFavorites }) {
 
-
-
     useEffect(() => {
         fetch('/session')
             .then(response => response.json())
@@ -14,7 +12,6 @@ function Login({ name, user, setUser, setName, setFavorites }) {
                     setName(data.name)
                 }
             })
-
     }, [])
 
     // for Google Login
