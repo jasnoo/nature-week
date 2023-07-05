@@ -57,5 +57,5 @@
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.13.2"
   },
-  "overrides": { "semver": "^7.5.3" }
+  "overrides": { "semver": "^7.5.2" }
 }

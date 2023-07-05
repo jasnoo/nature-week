@@ -58,12 +58,11 @@ app.use(
 const mongoURI = process.env.NODE_ENV === 'development' ? process.env.MONGO_LOCAL : process.env.MONGO_URI;
 console.log(mongoURI)
 try {
-  mongoose
-    .connect('mongodb://localhost/natureweek', {
-      // .connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    })
+  mongoose.connect(process.env.MONGO_URI, {
+    // .connect('mongodb://localhost/natureweek', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
     .then(console.log("Connected to MongoDB"));
 } catch {
   (err) => console.log(err);
@@ -106,14 +105,12 @@ app.get("/logout", (req, res) => {
 });
 
 
-
 app.use("/find/:location_id/:nature_option",
   finderController.getNatureData,
   (req, res) => {
     res.status(200).send({ results: res.locals.results, date: res.locals.date });
   }
 );
-
 
 
 app.post("/favorites/add", sessionController.getSession, favoriteController.addFavorite, (req, res) => {
@@ -135,21 +132,20 @@ app.post("/favorites/remove", sessionController.getSession, favoriteController.r
 app.use("/favorites/all",
   sessionController.getSession,
   favoriteController.getAllFavorites,
-  // favoriteController.getFavoriteData,
   (req, res) => {
     res.status(200).send(res.locals.favorites);
   }
 );
-
-app.get("/signup", (req, res) => {
-  res.status(200).sendFile(path.join(__dirname, "../client/signup.html"));
-});
 
 app.use("/build", express.static(path.join(__dirname, "../build")));
 
 app.get("/", (req, res) => {
   res.status(200).sendFile(path.join(__dirname, "../index.html"));
 });
+
+app.use((err, req, res, next) => {
+  res.status(err.status || 500).send({ error: err || 'Something broke!' })
+})
 
 app.listen(3000);
 

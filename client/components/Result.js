@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import ResultFavorite from "./ResultFavorite";
-
+import React from "react";
 
 function Result({ speciesID, handleFavorite, common, name, url, count, isFavorite, auth }) {
 

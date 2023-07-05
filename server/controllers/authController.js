@@ -18,14 +18,27 @@ authController.verifyCredentials = (req, res, next) => {
         // This is a JSON object that contains all the user info
         return payload;
     }
+    // if (res.locals.token === undefined) {
+    //     let credential = req.body.credential
+    //     console.log('came from logging in')
+    // } else {
+    //     let credential = res.locals.token
+    //     console.log('came from sessions')
+
+    // }
+
     const result = verify(process.env.GOOGLE_OAUTH_CLIENT_ID, req.body.credential)
+    // const result = verify(process.env.GOOGLE_OAUTH_CLIENT_ID, credential)
     result
         .then((data) => {
             res.locals.credentials = data
             res.locals.token = req.body.credential
             next();
         })
-        .catch(e => next(e))
+        .catch(err => {
+            console.log('error', err)
+            next(err)
+        })
 
 }
 
