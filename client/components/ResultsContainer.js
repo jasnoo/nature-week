@@ -50,7 +50,6 @@ function ResultsContainer({ speciesList, sinceDate, natureOption, handleFavorite
       resultArr = speciesList.map((x, i) => {
 
         let isFavorite = favorites.includes(Number(x.id))
-        console.log('isFavorite in results list', isFavorite)
         return (
           <Result auth={auth}
             handleFavorite={handleFavorite}

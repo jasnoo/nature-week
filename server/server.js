@@ -60,12 +60,11 @@ try {
     })
     .then(console.log("Connected to MongoDB"));
 } catch {
-  (err) => console.log(error);
+  (err) => console.log(err);
 }
 
 
 app.use("/session", sessionController.getSession, userController.getUserFavorites, (req, res) => {
-  console.log('end of session route')
   const sess = req.session;
   if (sess.user && res.locals.favorites) {
     res.status(200).send({ user: sess.user, favorites: res.locals.favorites, name: res.locals.name })
@@ -112,7 +111,6 @@ app.use("/find/:location_id/:nature_option",
 
 
 app.post("/favorites/add", sessionController.getSession, favoriteController.addFavorite, (req, res) => {
-  console.log('res.locals in add', res.locals)
   if (res.locals.user) {
     res.status(200).json(res.locals.userFavorites);
   }
@@ -150,37 +148,3 @@ app.get("/", (req, res) => {
 app.listen(3000);
 
 
-
-
-
-// app.get("/", (req, res) => {
-//   console.log('entering main get request')
-
-//   const sess = req.session;
-//   if (sess.user) {
-//     console.log('username found')
-//     res.status(200).send(sess.user)
-
-//   } else {
-//     console.log('no username')
-//     res.status(200).send('no username')
-
-//     // res.end('<a href=' + '/logout' + '>Click here to log in</a >')
-
-//   }
-// });
-
-
-    // sess looks like this
-    //     {
-    //     "sess": {
-    //         "cookie": {
-    //             "originalMaxAge": 120000,
-    //             "expires": "2023-07-01T17:03:58.631Z",
-    //             "secure": false,
-    //             "httpOnly": false,
-    //             "path": "/"
-    //         },
-    //         "user": "jasminee@gmail.com"
-    //     }
-    // }

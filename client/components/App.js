@@ -8,16 +8,14 @@ import Footer from "./Footer.js";
 
 function App() {
     const [locationInput, setLocationInput] = useState('')
-    const [location, setLocation] = useState({})
+    // const [location, setLocation] = useState({})
     const [locationText, setLocationText] = useState('')
     const [locationId, setLocationId] = useState()
     const [locationList, setLocationList] = useState([])
     const [speciesList, setSpeciesList] = useState(null)
-    const [headerText, setHeaderText] = useState("Nature")
     const [natureOption, setNatureOption] = useState('all')
     const [sinceDate, setSinceDate] = useState('')
     const [showLocations, setShowLocations] = useState(true)
-    const [showResults, setShowResults] = useState(false)
     const [error, setError] = useState(null)
     const [active, setActive] = useState('');
     const [user, setUser] = useState(null)
@@ -64,7 +62,6 @@ function App() {
     useEffect(() => {
         if (natureOption && locationId && natureOption !== 'Favorites') {
             setShowFavorites(false)
-            setShowResults(true)
             fetch(`/find/${locationId}/${natureOption}`)
                 .then((response) => response.json())
                 .then((data) => {
@@ -78,15 +75,12 @@ function App() {
     // when user chooses favorites
 
     function getFavorites() {
-        setHeaderText('Nature')
         if (user) {
             if (favorites[0] !== undefined) {
                 let favString = favorites.join("%2C")
-                console.log('fav string', favString)
                 fetch(`https://api.inaturalist.org/v1/taxa/${favString}`)
                     .then((response) => response.json())
                     .then((data) => {
-                        // console.log('data from inaturalist about fav: ', data)
                         let favoritesInfo = data.results.map(x => {
                             return {
                                 id: x.id,
@@ -95,7 +89,6 @@ function App() {
                                 medium_url: x.default_photo.medium_url,
                                 nature_option: x.iconic_taxon_name,
                             }
-
                         })
                         setSpeciesList(favoritesInfo)
                     })
@@ -116,7 +109,6 @@ function App() {
             Favorites: "Favorites"
         };
         setNatureOption(iNat)
-        setHeaderText(name)
 
 
     }
@@ -137,7 +129,6 @@ function App() {
 
     // when a user adds/removes favorites
     function handleFavorite(e, isFavorite) {
-        console.log('user?:', user, ".. is favorite?:", isFavorite)
         if (user) {
             let favObj = {
                 _id: e.target.getAttribute("speciesId"),
@@ -152,11 +143,9 @@ function App() {
             })
                 .then((response) => response.json())
                 .then(data => {
-                    console.log('data:', data)
                     setFavorites(data)
                 })
         }
-        else { console.log('not logged in!') }
     }
 
     // creates buttons for nature filters
@@ -184,7 +173,6 @@ function App() {
                         return <li className={`natureOption ${active === iNat && "active"}`} key='favorite'>
                             <span
                                 onClick={() => {
-                                    setSpeciesList(null)
                                     setShowFavorites(true)
                                     setLocationText('')
                                     natureFilter(i, name, iNat)
@@ -206,8 +194,7 @@ function App() {
             <Login key={`login${!!user}`} user={user} setUser={setUser} setName={setName} name={name} setFavorites={setFavorites} />
             <div className='finderContainer'>
                 <h1 className='newHeader'>
-                    This Week in{" "}
-                    <span className='titleOption'>{headerText}</span>
+                    This Week in Nature
                 </h1>
 
                 <div className='infoText'>Find out what has been spotted near you by the <a href="https://www.inaturalist.org/">iNaturalist</a> community this week!</div>
@@ -215,15 +202,15 @@ function App() {
                 {natureButtons}
                 <div className='finder'>
                     <div id='locationBox'>
-                        <input type='text' id='location' name='loc' placeholder="Your Location" onChange={e => handleLocationChange(e)} value={locationInput} />
+                        {showFavorites ? null : <input type='text' id='location' name='loc' placeholder="Your Location" onChange={e => handleLocationChange(e)} value={locationInput} />}
                         <ErrorMessage error={error} />
                         {showLocations ? <LocationResults key='locRes' results={locationList} locationInput={locationInput} locationText={locationText} handleClick={handleLocationClick} /> : null}
                     </div>
                 </div>
                 <ResultsContainer
-                    key={`results-${natureOption}-${favorites.length}`}
+                    key={`results-${natureOption}`}
                     auth={!!user}
-                    natureOption={headerText}
+                    // natureOption={headerText}
                     sinceDate={sinceDate}
                     speciesList={speciesList}
                     favorites={favorites}

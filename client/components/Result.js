@@ -19,9 +19,9 @@ function Result({ speciesID, handleFavorite, common, name, url, count, isFavorit
     <div
       className='result'>
       {auth ? (<span onClick={e => {
-        toggleColor(e);
+        // toggleColor(e);
         handleFavorite(e, isFavorite);
-      }} className={`fav-heart ${isFavorite ? 'fav-active' : 'fav-inactive'}`} speciesID={speciesID}  > ♥</span>) : null}
+      }} className={`fav-heart ${isFavorite ? 'fav-active' : 'fav-inactive'}`} speciesid={speciesID}  > ♥</span>) : null}
 
       <div className='resultLink'> <a href={`https://www.inaturalist.org/taxa/${speciesID}`} target="_blank">
         <h2>{common}</h2>

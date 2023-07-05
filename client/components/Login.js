@@ -8,7 +8,6 @@ function Login({ name, user, setUser, setName, setFavorites }) {
         fetch('/session')
             .then(response => response.json())
             .then(data => {
-                console.log('data from sessions resp:', data)
                 if (data.user) {
                     setUser(data.user)
                     setFavorites(data.favorites)
@@ -30,17 +29,12 @@ function Login({ name, user, setUser, setName, setFavorites }) {
                 'Content-Type': 'application/json'
             },
         })
-            .then((response) => response.json())
-            // .then(data => console.log('data:', data))
+            .then(response => response.json())
             .then(data => {
-                console.log('data from google resp:', data)
                 setFavorites(data.favorites)
                 setUser(data.user)
                 setName(data.name)
             })
-
-
-
     };
     const errorMessage = (error) => {
         console.log(error);

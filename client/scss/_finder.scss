@@ -1,7 +1,7 @@
 .container{
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   align-content:space-between;
 }
@@ -23,7 +23,6 @@
     }
   }
 }
-
 
 .natureOptions {
   margin: auto;
@@ -102,6 +101,7 @@
   text-align: center;
   margin: 40px 0 15px;
   font-size: 14px;
+  // bottom: 0px;
+  align-self: center;
 }
-
 
