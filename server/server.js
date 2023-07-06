@@ -69,23 +69,21 @@ try {
 }
 
 
-app.use("/session", sessionController.getSession, userController.getUserFavorites, (req, res) => {
-  const sess = req.session;
-  if (sess.user && res.locals.favorites) {
-    res.status(200).send({ user: sess.user, favorites: res.locals.favorites, name: res.locals.name })
-  } else {
-    res.status(200).send({ user: null, })
-  }
-});
+app.use("/session",
+  sessionController.getSession,
+  authController.verifyCredentials,
+  userController.getExistingUserFavorites,
+  (req, res) => {
+    const sess = req.session;
+    if (sess.user && res.locals.favorites) {
+      res.status(200).send({ user: sess.user, favorites: res.locals.favorites, name: res.locals.name })
+    } else {
+      res.status(200).send({ user: null, })
+    }
+  });
 
 
-app.use("/login", authController.verifyCredentials, userController.getUser, (req, res) => {
-  const sess = req.session;
-  const user = res.locals.credentials.email
-  sess.user = res.locals.credentials.email
-  sess.name = res.locals.credentials.given_name
-  sess.token = res.locals.token
-
+app.use("/login", authController.storeJwt, authController.verifyCredentials, sessionController.createSession, userController.findOrCreateUser, (req, res) => {
   const returnObj = {
     favorites: res.locals.favorites,
     user: res.locals.credentials.email,
@@ -115,7 +113,7 @@ app.use("/find/:location_id/:nature_option",
 
 app.post("/favorites/add", sessionController.getSession, favoriteController.addFavorite, (req, res) => {
   if (res.locals.user) {
-    res.status(200).json(res.locals.userFavorites);
+    res.status(200).json({ user: true, favorites: res.locals.userFavorites });
   }
   else res.status(200).json([]);
 
@@ -123,9 +121,9 @@ app.post("/favorites/add", sessionController.getSession, favoriteController.addF
 
 app.post("/favorites/remove", sessionController.getSession, favoriteController.removeFavorite, (req, res) => {
   if (res.locals.user) {
-    res.status(200).json(res.locals.userFavorites);
+    res.status(200).json({ user: true, favorites: res.locals.userFavorites });
   }
-  else res.status(200).json([]);
+  else res.status(200).json({ user: false });
 
 });
 
@@ -144,7 +142,7 @@ app.get("/", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  res.status(err.status || 500).send({ error: err || 'Something broke!' })
+  res.status(500).send(err)
 })
 
 app.listen(3000);

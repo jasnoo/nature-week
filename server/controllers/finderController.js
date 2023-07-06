@@ -21,7 +21,7 @@ finderController.getNatureData = (req, res, next) => {
             res.locals.results = speciesArr
             next();
         })
-        .catch(error => console.error(error));
+        .catch(error => next({ error: 'Could not retrieve data from iNaturalist' }));
 }
 
 module.exports = finderController

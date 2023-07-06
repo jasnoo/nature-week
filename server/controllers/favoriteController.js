@@ -13,7 +13,7 @@ favoriteController.addFavorite = async (req, res, next) => {
         })
       next();
     } catch (err) {
-      next(err);
+      next({ Error: 'Could not add to favorites' });
     }
   }
   else {
@@ -31,7 +31,7 @@ favoriteController.removeFavorite = async (req, res, next) => {
         .then(data => { res.locals.userFavorites = data.favorites })
       next();
     } catch (err) {
-      next(err);
+      next({ Error: 'Could not remove from favorites' });
     }
   }
   next();
@@ -46,7 +46,7 @@ favoriteController.getAllFavorites = (req, res, next) => {
           next();
         })
     } catch (err) {
-      next(err);
+      next({ Error: 'Could not get all user favorites' });
     }
   }
   else {

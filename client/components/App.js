@@ -42,7 +42,13 @@ function App() {
                 "https://api.inaturalist.org/v1/places/autocomplete?" +
                 new URLSearchParams({ q: id })
             )
-                .then((response) => response.json())
+                .then(response => {
+                    if (response.ok) {
+                        return response.json()
+                    } else {
+                        throw new Error(`HTTP error, status = ${response.status}`);
+                    }
+                })
                 .then((data) => {
                     let locationArr = data.results.map((x) => {
                         return { display_name: x.display_name, location_id: x.id };
@@ -63,7 +69,13 @@ function App() {
         if (natureOption && locationId && natureOption !== 'Favorites') {
             setShowFavorites(false)
             fetch(`/find/${locationId}/${natureOption}`)
-                .then((response) => response.json())
+                .then(response => {
+                    if (response.ok) {
+                        return response.json()
+                    } else {
+                        throw new Error(`HTTP error, status = ${response.status}`);
+                    }
+                })
                 .then((data) => {
                     setSpeciesList(data.results)
                     setSinceDate(`${data.date} - today`)
@@ -79,7 +91,13 @@ function App() {
             if (favorites[0] !== undefined) {
                 let favString = favorites.join("%2C")
                 fetch(`https://api.inaturalist.org/v1/taxa/${favString}`)
-                    .then((response) => response.json())
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json()
+                        } else {
+                            throw new Error(`HTTP error, status = ${response.status}`);
+                        }
+                    })
                     .then((data) => {
                         let favoritesInfo = data.results.map(x => {
                             return {
@@ -141,9 +159,21 @@ function App() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(favObj),
             })
-                .then((response) => response.json())
+                .then(response => {
+                    if (response.ok) {
+                        return response.json()
+                    } else {
+                        throw new Error(`HTTP error, status = ${response.status}`);
+                    }
+                })
                 .then(data => {
-                    setFavorites(data)
+                    if (data.user) {
+                        setFavorites(data.favorites)
+                    } else {
+                        setUser(null)
+                        setName(null)
+                        setFavorites([])
+                    }
                 })
         }
     }

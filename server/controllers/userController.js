@@ -4,7 +4,7 @@ const { User } = require("../models/user");
 const userController = {};
 
 // getting a user/creating a new one 
-userController.getUser = async (req, res, next) => {
+userController.findOrCreateUser = async (req, res, next) => {
     const { email, given_name } = res.locals.credentials;
     try {
         await User.findOne({ email: email })
@@ -30,12 +30,12 @@ userController.getUser = async (req, res, next) => {
 
             });
     } catch (err) {
-        next(err);
+        next({ Error: 'Could not find or create user' });
     }
 };
 
 // getting user favorites
-userController.getUserFavorites = async (req, res, next) => {
+userController.getExistingUserFavorites = async (req, res, next) => {
     if (res.locals.user) {
         try {
             await User.findOne({ email: res.locals.user }).select('favorites').exec()
@@ -45,7 +45,7 @@ userController.getUserFavorites = async (req, res, next) => {
             next()
         }
         catch (err) {
-            next(err)
+            next({ Error: 'Could not find user' })
         }
     }
     next()
