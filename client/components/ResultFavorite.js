@@ -1,8 +1,8 @@
 import React from "react";
 
 function Result({ speciesID, handleFavorite, common, name, url, count, isFavorite }) {
-
   return (
+
     <div
       className={`result ${isFavorite ? '' : 'fav-removed'}`}>
       <span onClick={e => {
@@ -15,6 +15,8 @@ function Result({ speciesID, handleFavorite, common, name, url, count, isFavorit
       </div>
       <img src={url}></img>
     </div >
+
+
   );
 }
 export default Result;

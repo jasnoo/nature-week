@@ -44,7 +44,6 @@ function ResultsContainer({ speciesList, sinceDate, natureOption, handleFavorite
     let resultArr
     if (speciesList !== null) {
       resultArr = speciesList.map((x, i) => {
-
         let isFavorite = favorites.includes(Number(x.id))
         return (
           <Result auth={auth}
