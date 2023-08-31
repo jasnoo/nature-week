@@ -31,7 +31,7 @@
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "google-auth-library": "^8.9.0",
-    "mongoose": ">=7.3.3",
+    "mongoose": ">=7.5.0",
     "node-fetch": "^2.6.11",
     "process": "^0.11.10",
     "react": "^18.2.0",
